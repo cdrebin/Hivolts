@@ -56,42 +56,42 @@ public class DrawHivolts extends JFrame{
 		g.setColor(Color.ORANGE);
 		for(int i = 0; i < 13; i++){
 			//vertical
-			g.drawLine(Gx2Sx(i), 0, Gx2Sx(i), Gh2Sh(GRIDH));
+			g.drawLine(Gridx2Screenx(i), 0, Gridx2Screenx(i), GridHeight2ScreenHeight(GRIDH));
 			//horizontal
-			g.drawLine(0, Gy2Sy(i), Gw2Sw(GRIDW), Gy2Sy(i));
+			g.drawLine(0, Gridy2Screeny(i), GridWidth2ScreenWidth(GRIDW), Gy2Sy(i));
 		}
 	
 	}
 	
-	 public int Gx2Sx (double gx) {
+	 public int Gridx2Screenx (double gx) {
 			int sX =(int)( (gx / GRIDW) * canvasW + canvasOx); //convert to canvas coordinates, add canvas offset
 			return sX;
 		}
 	 
-	 public int Gy2Sy (double gy) {
+	 public int Gridy2Screeny (double gy) {
 			int sY =(int)( (gy / GRIDH) * canvasH + canvasOy); //convert to canvas coordinates, add canvas offset
 			return sY;
 		}
 	 
-	 public int Gw2Sw (double gW){
+	 public int GridWidth2ScreenWidth (double gW){
 		 int sW =(int)( (gW) * (canvasW / GRIDW));
 		 return sW;
 	 }
 	 
-	 public int Gh2Sh(double gH){
+	 public int GridHeight2ScreenHeight(double gH){
 		 int sH =(int)( (gH) * (canvasH / GRIDH) + canvasOy);
 		 return sH;
 	 }
 	 
 	 public int randomXCoord(){
 		 int randomCoord = (int)(1 + Math.random() * 10);
-		 randomCoord = Gx2Sx(randomCoord);
+		 randomCoord = Gridx2Screenx(randomCoord);
 		 return randomCoord;
 	 }
 	 
 	 public int randomYCoord(){
 		 int randomCoord = (int)(1 + Math.random() * 10);
-		 randomCoord = Gy2Sy(randomCoord);
+		 randomCoord = Gridy2Screeny(randomCoord);
 		 return randomCoord;
 	 } 
 }
