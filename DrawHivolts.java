@@ -84,13 +84,13 @@ public class DrawHivolts extends JFrame{
 	 }
 	 
 	 public int randomXCoord(){
-		 int randomCoord = (int)(Math.random() * 12);
+		 int randomCoord = (int)(Math.random() * 11);
 		 randomCoord = Gx2Sx(randomCoord);
 		 return randomCoord;
 	 }
 	 
 	 public int randomYCoord(){
-		 int randomCoord = (int)(Math.random() * 12);
+		 int randomCoord = (int)(Math.random() * 11);
 		 randomCoord = Gy2Sy(randomCoord);
 		 return randomCoord;
 	 } 
