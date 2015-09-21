@@ -58,7 +58,7 @@ public class DrawHivolts extends JFrame{
 			//vertical
 			g.drawLine(Gridx2Screenx(i), 0, Gridx2Screenx(i), GridHeight2ScreenHeight(GRIDH));
 			//horizontal
-			g.drawLine(0, Gridy2Screeny(i), GridWidth2ScreenWidth(GRIDW), Gy2Sy(i));
+			g.drawLine(0, Gridy2Screeny(i), GridWidth2ScreenWidth(GRIDW), Gridy2Screeny(i));
 		}
 	
 	}
