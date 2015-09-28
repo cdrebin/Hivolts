@@ -81,7 +81,7 @@ public class DrawHivolts extends JFrame{
 		int x = 0; int y = 0;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 12; j++) {
-				drawSmiley(g, Gridx2Screenx(x), Gridy2Screeny(y), Color.BLACK, YELLOW, 180, 22);
+				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
 				x++;
 			}
 			y = 11; x = 0;
@@ -89,23 +89,36 @@ public class DrawHivolts extends JFrame{
 		y = 1;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
-				drawSmiley(g, Gridx2Screenx(x), Gridy2Screeny(y), Color.BLACK, YELLOW, 180, 22);
+				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
 				y++;
 			}
 			y = 1; x = 11;
 		}
 	}
 	
+	public void drawOneFence(Graphics g, int x, int y) {
+		g.setColor(Color.ORANGE);
+		for (int i = 0; i < 3; i++) {
+			g.fillRect(x+5, y+5, 6, 35);
+			int[] triangleX = {x+5, x+8, x+11};
+			int[] triangleY = {y+5, y, y+5};
+			g.fillPolygon(triangleX, triangleY, 3);
+			x += 12;
+		}
+		g.fillRect(x-36, y+13, 40, 5);
+		g.fillRect(x-36, y+28, 40, 5);
+
+	}
+
 	 public int Gridx2Screenx (double gx) {
 			int sX =(int)( (gx / GRIDW) * canvasW + canvasOx); //convert to canvas coordinates, add canvas offset
 			return sX;
-		}
-	 
+		}	 
+		 
 	 public int Gridy2Screeny (double gy) {
 			int sY =(int)( (gy / GRIDH) * canvasH + canvasOy); //convert to canvas coordinates, add canvas offset
 			return sY;
-		}
-	 
+		}	 
 	 public int GridWidth2ScreenWidth (double gW){
 		 int sW =(int)( (gW) * (canvasW / GRIDW));
 		 return sW;
