@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 //September 15, 2015 
 
 public class DrawHivolts extends JFrame{
-	private final Color YELLOW = new Color(0xEE9605);
+	private final Color CYAN = new Color(0x91D8E2);
 
 	//screen refers to the pop-up window 
 	 int screenW;
@@ -34,7 +34,7 @@ public class DrawHivolts extends JFrame{
 	
 	public void init() {
 		setSize(1200, 1200);
-		setBackground(Color.BLACK);
+		setBackground(Color.WHITE);
 		repaint();
 	
 		//set screen width and height to actual values of window
@@ -43,21 +43,21 @@ public class DrawHivolts extends JFrame{
 	}
 	
 	public void paint(Graphics g){
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
 		drawGrid(g);
 		// draw smileys
 		initializeMhos(mho);
 		for (int i = 0; i < mho.length; i++) {
-			drawSmiley(g, mho[i].getXCoord(), mho[i].getYCoord(), YELLOW, Color.BLACK, 0, 25);
+			drawSmiley(g, mho[i].getXCoord(), mho[i].getYCoord(),Color.WHITE, CYAN, 0, 25);
 		}
-		drawSmiley(g, you.getXCoord(), you.getYCoord(), Color.BLACK, YELLOW, 180, 22);
+		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22);
 		drawFrences(g);
 	}
 	
 	public void drawGrid(Graphics g){
 		
-		g.setColor(Color.ORANGE);
+		g.setColor(CYAN);
 		for(int i = 0; i < 13; i++){
 			//vertical
 			g.drawLine(Gridx2Screenx(i), 0, Gridx2Screenx(i), GridHeight2ScreenHeight(GRIDH));
@@ -97,7 +97,7 @@ public class DrawHivolts extends JFrame{
 	}
 	
 	public void drawOneFence(Graphics g, int x, int y) {
-		g.setColor(Color.ORANGE);
+		g.setColor(CYAN);
 		for (int i = 0; i < 3; i++) {
 			g.fillRect(x+5, y+5, 6, 35);
 			int[] triangleX = {x+5, x+8, x+11};
