@@ -1,9 +1,0 @@
-import java.awt.*;
-
-public class You extends Character{
-	private final Color YELLOW = new Color(0xEE9605);
-
-	public You () {
-		super.setBaseColor(Color.BLACK);
-	}
-}
