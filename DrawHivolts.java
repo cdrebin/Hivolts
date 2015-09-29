@@ -27,7 +27,7 @@ public class DrawHivolts extends JFrame{
 	 Character you = new Character(randomXCoord(), randomYCoord());
 	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
 	 Character mho[] = new Character[12];
-	 Character fences[] = new Character[12];
+	 Character fences[] = new Character[20];
 
 	public DrawHivolts() {
 		init();
@@ -109,7 +109,7 @@ public class DrawHivolts extends JFrame{
 	}
 	
 	public void drawOneFence(Graphics g, int x, int y) {
-		g.setColor(CYAN);
+		g.setColor(Color.CYAN);
 		for (int i = 0; i < 3; i++) {
 			g.fillRect(x+5, y+5, 6, 35);
 			int[] triangleX = {x+5, x+8, x+11};
