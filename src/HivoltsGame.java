@@ -193,7 +193,7 @@ public class HivoltsGame extends JFrame{
 		return array;
 	}
 	 
-	 public void move(UserKeyPress k){
+	 public void move(){
 		 
 	 }
 
