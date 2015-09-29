@@ -1,11 +1,14 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.swing.JFrame;
 
 //Claire Drebin 
 //September 15, 2015 
 
-public class DrawHivolts extends JFrame{
+public class HivoltsGame extends JFrame{
 	private final Color CYAN = new Color(0x91D8E2);
 
 	//screen refers to the pop-up window 
@@ -28,8 +31,8 @@ public class DrawHivolts extends JFrame{
 	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
 	 Character mho[] = new Character[12];
 	 Character fences[] = new Character[20];
-
-	public DrawHivolts() {
+	 	 
+	public HivoltsGame() {
 		init();
 	}
 	
@@ -41,34 +44,27 @@ public class DrawHivolts extends JFrame{
 		//set screen width and height to actual values of window
 		 screenW = getWidth();
 		 screenH = getHeight();
-		 
-		// draw smileys
-		initializeArray(mho);
-		initializeArray(fences);
-		
+		//initializeArray(mho);
+		//initializeArray(fences);
+		initializeFencesAndMhos(mho, fences);
 	}
 	
 	public void paint(Graphics g){
 		g.setColor(Color.WHITE);
 		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
-		
 		drawGrid(g);
-		
+		// draw smileys
 		for (int i = 0; i < mho.length; i++) {
-			drawSmiley(g, mho[i].getXCoord(), mho[i].getYCoord(),Color.WHITE, CYAN, 0, 25);
-		}
-		
-		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22);
-		
+			drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, CYAN, 0, 25);
+		}		
 		for (int i = 0; i < fences.length; i++) {
-			drawOneFence(g, fences[i].getXCoord(), fences[i].getYCoord());
+			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
 		}
-		
+		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22);
 		drawFences(g);
 	}
 	
 	public void drawGrid(Graphics g){
-		
 		g.setColor(CYAN);
 		for(int i = 0; i < 13; i++){
 			//vertical
@@ -109,7 +105,7 @@ public class DrawHivolts extends JFrame{
 	}
 	
 	public void drawOneFence(Graphics g, int x, int y) {
-		g.setColor(Color.CYAN);
+		g.setColor(CYAN);
 		for (int i = 0; i < 3; i++) {
 			g.fillRect(x+5, y+5, 6, 35);
 			int[] triangleX = {x+5, x+8, x+11};
@@ -119,9 +115,37 @@ public class DrawHivolts extends JFrame{
 		}
 		g.fillRect(x-36, y+13, 40, 5);
 		g.fillRect(x-36, y+28, 40, 5);
-
 	}
-
+	
+	/*	for (int i = 0; i < mho.length; i++) {
+			drawSmiley(g, mho[i].getXCoord(), mho[i].getYCoord(),Color.WHITE, CYAN, 0, 25);
+		}		
+		for (int i = 0; i < fences.length; i++) {
+			drawOneFence(g, fences[i].getXCoord(), fences[i].getYCoord());
+		}
+		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22); 
+	*/
+	 
+	 public void initializeArray(Character array[]) {
+		 for (int i = 0; i < array.length; i++) {
+		 }
+	 }
+	 
+	public void initializeFencesAndMhos(Character array1[], Character array2[]) {
+		ArrayList<Integer[]> array = coords();
+		ArrayList<Integer[]> newArray = new ArrayList<Integer[]>();
+		for (int i = 0; i < 32; i++) {
+			int n = (int)(Math.random() * array.size());
+			newArray.add(array.get(n));
+			array.remove(n);
+		}
+		for (int i = 0; i < 12; i++) {
+			 array1[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
+		}			
+		for (int i = 0; i < 20; i++) {
+			 array2[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
+		}
+	}
 	 public int Gridx2Screenx (double gx) {
 			int sX =(int)( (gx / GRIDW) * canvasW + canvasOx); //convert to canvas coordinates, add canvas offset
 			return sX;
@@ -153,9 +177,19 @@ public class DrawHivolts extends JFrame{
 		 return randomCoord;
 	 } 
 	 
-	 public void initializeArray(Character array[]) {
-		 for (int i = 0; i < array.length; i++) {
-			 array[i] = new Character(randomXCoord(), randomYCoord());
-		 }
-	 }
+	/**
+	 * gets ArrayList with 144 arrays starting from [0,0] to [11,11]
+	 * @return
+	 */
+	public ArrayList<Integer[]> coords() {
+		ArrayList<Integer[]> array = new ArrayList<Integer[]>();
+		// Creates ArrayList with 121 arrays starting from [1, 1] to [10, 10]
+		for (int i = 1; i < 11; i++) {
+			for (int j = 1; j < 11; j++) {
+				Integer point[] = {i, j};
+				array.add(point);
+			}
+		}
+		return array;
+	}
 }
