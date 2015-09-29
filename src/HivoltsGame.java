@@ -9,11 +9,6 @@ import javax.swing.JFrame;
 //September 15, 2015 
 
 public class HivoltsGame extends JFrame{
-
-	
-	private static final long serialVersionUID = 1L;
-
-
 	private final Color CYAN = new Color(0x91D8E2);
 
 	//screen refers to the pop-up window 
@@ -36,7 +31,7 @@ public class HivoltsGame extends JFrame{
 	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
 	 Character mho[] = new Character[12];
 	 Character fences[] = new Character[20];
-
+	 	 
 	public HivoltsGame() {
 		init();
 	}
@@ -54,7 +49,7 @@ public class HivoltsGame extends JFrame{
 		initializeFencesAndMhos(mho, fences);
 	}
 	
-	public void paint(Graphics g, UserKeyPress k){
+	public void paint(Graphics g){
 		g.setColor(Color.WHITE);
 		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
 		drawGrid(g);
@@ -131,11 +126,15 @@ public class HivoltsGame extends JFrame{
 		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22); 
 	*/
 	 
+	 public void initializeArray(Character array[]) {
+		 for (int i = 0; i < array.length; i++) {
+		 }
+	 }
 	 
 	public void initializeFencesAndMhos(Character array1[], Character array2[]) {
 		ArrayList<Integer[]> array = coords();
 		ArrayList<Integer[]> newArray = new ArrayList<Integer[]>();
-		for (int i = 0; i < 32; i++) {
+		for (int i = 0; i < 33; i++) {
 			int n = (int)(Math.random() * array.size());
 			newArray.add(array.get(n));
 			array.remove(n);
@@ -178,7 +177,6 @@ public class HivoltsGame extends JFrame{
 		 return randomCoord;
 	 } 
 	 
-
 	/**
 	 * gets ArrayList with 144 arrays starting from [0,0] to [11,11]
 	 * @return
@@ -194,12 +192,6 @@ public class HivoltsGame extends JFrame{
 		}
 		return array;
 	}
-
-	 public void initializeArray(Character array[]) {
-		 for (int i = 0; i < array.length; i++) {
-			 array[i] = new Character(randomXCoord(), randomYCoord());
-		 }
-	 }
 	 
 	 public void move(UserKeyPress k){
 		 
