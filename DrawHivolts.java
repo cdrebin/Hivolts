@@ -27,7 +27,8 @@ public class DrawHivolts extends JFrame{
 	 Character you = new Character(randomXCoord(), randomYCoord());
 	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
 	 Character mho[] = new Character[12];
-	 	 
+	 Character fences[] = new Character[12];
+
 	public DrawHivolts() {
 		init();
 	}
@@ -40,19 +41,30 @@ public class DrawHivolts extends JFrame{
 		//set screen width and height to actual values of window
 		 screenW = getWidth();
 		 screenH = getHeight();
+		 
+		// draw smileys
+		initializeArray(mho);
+		initializeArray(fences);
+		
 	}
 	
 	public void paint(Graphics g){
 		g.setColor(Color.WHITE);
 		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
+		
 		drawGrid(g);
-		// draw smileys
-		initializeMhos(mho);
+		
 		for (int i = 0; i < mho.length; i++) {
 			drawSmiley(g, mho[i].getXCoord(), mho[i].getYCoord(),Color.WHITE, CYAN, 0, 25);
 		}
+		
 		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22);
-		drawFrences(g);
+		
+		for (int i = 0; i < fences.length; i++) {
+			drawOneFence(g, fences[i].getXCoord(), fences[i].getYCoord());
+		}
+		
+		drawFences(g);
 	}
 	
 	public void drawGrid(Graphics g){
@@ -77,7 +89,7 @@ public class DrawHivolts extends JFrame{
 		g.drawArc(x+10, y+mouth, 20, 10, degree, 180);
 	}
 	
-	public void drawFrences(Graphics g) {
+	public void drawFences(Graphics g) {
 		int x = 0; int y = 0;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 12; j++) {
@@ -141,7 +153,7 @@ public class DrawHivolts extends JFrame{
 		 return randomCoord;
 	 } 
 	 
-	 public void initializeMhos(Character array[]) {
+	 public void initializeArray(Character array[]) {
 		 for (int i = 0; i < array.length; i++) {
 			 array[i] = new Character(randomXCoord(), randomYCoord());
 		 }
