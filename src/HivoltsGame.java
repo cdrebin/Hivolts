@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,8 @@ public class HivoltsGame extends JFrame{
 	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
 	 Character mho[] = new Character[12];
 	 Character fences[] = new Character[20];
-	 	 
+	 
+	 UserKeyPress k = new UserKeyPress();
 	public HivoltsGame() {
 		init();
 	}
@@ -40,13 +42,16 @@ public class HivoltsGame extends JFrame{
 		setSize(1200, 1200);
 		setBackground(Color.WHITE);
 		repaint();
-	
+		
+		addKeyListener(k);
+		
 		//set screen width and height to actual values of window
 		 screenW = getWidth();
 		 screenH = getHeight();
 		//initializeArray(mho);
 		//initializeArray(fences);
 		initializeFencesAndMhos(mho, fences);
+		
 	}
 	
 	public void paint(Graphics g){
@@ -62,6 +67,8 @@ public class HivoltsGame extends JFrame{
 		}
 		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22);
 		drawFences(g);
+		
+		UpdateGameState(k);
 	}
 	
 	public void drawGrid(Graphics g){
@@ -193,8 +200,38 @@ public class HivoltsGame extends JFrame{
 		return array;
 	}
 	 
-	 public void move(){
+	 public void move(Character mho, int moveX, int moveY){
+		 if(mho.getXCoord() + moveX >= 12 || 
+			(mho.getXCoord() + moveX) <= 0){
+			mho.setXCoord(mho.getXCoord() + moveX);
+			System.out.println("MOVE X");
+		 }
+		 else{
+			mho.setXCoord(Gridx2Screenx(mho.getXCoord()));
+			System.out.println("NO MOVE");
+		 }
+		 
+		 if(mho.getYCoord() + moveY > 12 || 
+					(mho.getYCoord() + moveY) < 0){
+			 mho.setYCoord(mho.getYCoord() + moveY);
+		 }
+		 else{
+				mho.setYCoord(Gridy2Screeny(mho.getYCoord()));
+			 }
+		 
 		 
 	 }
+	 
+	 public void UpdateGameState(UserKeyPress k){
+		 int xMove = k.getMoveX();
+		 int yMove = k.getMoveY();
+		 move(you, Gridx2Screenx(xMove), Gridx2Screenx(yMove));
+		 
+		 k.resetX();
+		 k.resetY();
+		
+		repaint();
+	 }
 
+	
 }

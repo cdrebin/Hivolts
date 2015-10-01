@@ -6,8 +6,6 @@ public class Main{
 		HivoltsGame h = new HivoltsGame();
 		h.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		h.setVisible(true);
-		UserKeyPress k = new UserKeyPress();
-		h.addKeyListener(k);
 	}
 	
 	
