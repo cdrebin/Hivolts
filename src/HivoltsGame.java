@@ -65,9 +65,8 @@ public class HivoltsGame extends JFrame{
 		for (int i = 0; i < fences.length; i++) {
 			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
 		}
-		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22);
+		drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
 		drawFences(g);
-		
 		UpdateGameState(k);
 	}
 	
@@ -162,6 +161,7 @@ public class HivoltsGame extends JFrame{
 			int sY =(int)( (gy / GRIDH) * canvasH + canvasOy); //convert to canvas coordinates, add canvas offset
 			return sY;
 		}	 
+	 
 	 public int GridWidth2ScreenWidth (double gW){
 		 int sW =(int)( (gW) * (canvasW / GRIDW));
 		 return sW;
@@ -174,13 +174,11 @@ public class HivoltsGame extends JFrame{
 	 
 	 public int randomXCoord(){
 		 int randomCoord = (int)(1 + Math.random() * 10);
-		 randomCoord = Gridx2Screenx(randomCoord);
 		 return randomCoord;
 	 }
 	 
 	 public int randomYCoord(){
 		 int randomCoord = (int)(1 + Math.random() * 10);
-		 randomCoord = Gridy2Screeny(randomCoord);
 		 return randomCoord;
 	 } 
 	 
@@ -201,32 +199,26 @@ public class HivoltsGame extends JFrame{
 	}
 	 
 	 public void move(Character mho, int moveX, int moveY){
-		 if(mho.getXCoord() + moveX >= 12 || 
-			(mho.getXCoord() + moveX) <= 0){
-			mho.setXCoord(mho.getXCoord() + moveX);
-			System.out.println("MOVE X");
-		 }
-		 else{
-			mho.setXCoord(Gridx2Screenx(mho.getXCoord()));
-			System.out.println("NO MOVE");
-		 }
-		 
-		 if(mho.getYCoord() + moveY > 12 || 
-					(mho.getYCoord() + moveY) < 0){
-			 mho.setYCoord(mho.getYCoord() + moveY);
-		 }
-		 else{
-				mho.setYCoord(Gridy2Screeny(mho.getYCoord()));
-			 }
 		 
 		 
+		 if(mho.getXCoord() >= 10 && (k.action == "right") || (k.action == "up and right") || (k.action == "down and right")) {
+		 }
+		 else if (mho.getXCoord() <= 1 && (k.action == "left") || (k.action == "down and left") || (k.action == "up and left")) {
+		 }
+		 else if (mho.getYCoord() >= 10 && k.action == "down" || (k.action == "down and left") || (k.action == "down and right")) {
+		 }
+		 else if (mho.getYCoord() <= 1 && k.action == "up" || (k.action == "up and right") || (k.action == "up and left")) {
+		 }
+		 else {
+			 mho.setXCoord(mho.getXCoord() + moveX);
+			 mho.setYCoord(mho.getYCoord() + moveY); 
+		 }
 	 }
 	 
 	 public void UpdateGameState(UserKeyPress k){
 		 int xMove = k.getMoveX();
 		 int yMove = k.getMoveY();
-		 move(you, Gridx2Screenx(xMove), Gridx2Screenx(yMove));
-		 
+		 move(you, (xMove), (yMove));
 		 k.resetX();
 		 k.resetY();
 		

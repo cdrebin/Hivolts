@@ -54,4 +54,5 @@ public class Character{
 	public void setYCoord(int newYCoord){
 		this.yCoord = newYCoord;
 	}
+
 }
