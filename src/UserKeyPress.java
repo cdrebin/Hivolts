@@ -73,7 +73,9 @@ public class UserKeyPress implements KeyListener{
 			moveY = 1;
 			break;
 		case 'j': action = "jump";
+			
 			break;
+			
 		default: action = "nothing significant was pressed"	;
 		}
 		

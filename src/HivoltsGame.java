@@ -199,20 +199,35 @@ public class HivoltsGame extends JFrame{
 	}
 	 
 	 public void move(Character mho, int moveX, int moveY){
+		
+		 boolean justJumped = false;
+		 while (justJumped == false){
+			 if(k.action == "jump"){
+					int x = (int)(Math.random() * 9 + 1);
+					int y = (int)(Math.random() * 9 + 1 );
+					 mho.setXCoord(x);
+					 mho.setYCoord(y);
+					 justJumped = true;
+				 }
+		 }
+		
+		
 		 
-		 
-		 if(mho.getXCoord() >= 10 && (k.action == "right") || (k.action == "up and right") || (k.action == "down and right")) {
+		 if(mho.getXCoord() >= 10 && ((k.action == "right") || (k.action == "up and right") || (k.action == "down and right"))) {
 		 }
-		 else if (mho.getXCoord() <= 1 && (k.action == "left") || (k.action == "down and left") || (k.action == "up and left")) {
+		 else if (mho.getXCoord() <= 1 && ((k.action == "left") || (k.action == "down and left") || (k.action == "up and left"))) {
 		 }
-		 else if (mho.getYCoord() >= 10 && k.action == "down" || (k.action == "down and left") || (k.action == "down and right")) {
+		 else if (mho.getYCoord() >= 10 && ((k.action == "down") || (k.action == "down and left") || (k.action == "down and right"))) {
 		 }
-		 else if (mho.getYCoord() <= 1 && k.action == "up" || (k.action == "up and right") || (k.action == "up and left")) {
+		 else if (mho.getYCoord() <= 1 && ((k.action == "up") || (k.action == "up and right") || (k.action == "up and left"))) {
 		 }
 		 else {
 			 mho.setXCoord(mho.getXCoord() + moveX);
 			 mho.setYCoord(mho.getYCoord() + moveY); 
 		 }
+		 
+		
+		 
 	 }
 	 
 	 public void UpdateGameState(UserKeyPress k){
@@ -221,8 +236,7 @@ public class HivoltsGame extends JFrame{
 		 move(you, (xMove), (yMove));
 		 k.resetX();
 		 k.resetY();
-		
-		repaint();
+		 repaint();
 	 }
 
 	
