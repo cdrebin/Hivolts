@@ -198,19 +198,18 @@ public class HivoltsGame extends JFrame{
 		return array;
 	}
 	 
-	 public void move(Character mho, int moveX, int moveY){
-		
-		 boolean justJumped = false;
-		 while (justJumped == false){
-			 if(k.action == "jump"){
-					int x = (int)(Math.random() * 9 + 1);
-					int y = (int)(Math.random() * 9 + 1 );
-					 mho.setXCoord(x);
-					 mho.setYCoord(y);
-					 justJumped = true;
-				 }
+	 public void move(Character mho, int moveX, int moveY, boolean justJumped){
+		 if(k.action == "jump"){
+			 if (justJumped == false){
+				int x = (int)(Math.random() * 9 + 1);
+				int y = (int)(Math.random() * 9 + 1 );
+				 mho.setXCoord(x);
+				 mho.setYCoord(y);
+				 justJumped = true;
+			 }
+			 else {
+			 }
 		 }
-		
 		
 		 
 		 if(mho.getXCoord() >= 10 && ((k.action == "right") || (k.action == "up and right") || (k.action == "down and right"))) {
@@ -231,9 +230,15 @@ public class HivoltsGame extends JFrame{
 	 }
 	 
 	 public void UpdateGameState(UserKeyPress k){
+		 boolean justJumped = false;
+		 
 		 int xMove = k.getMoveX();
 		 int yMove = k.getMoveY();
-		 move(you, (xMove), (yMove));
+		 move(you, (xMove), (yMove), justJumped);
+		 if (k.action == "jump"){
+			justJumped = true; 
+		 }
+
 		 k.resetX();
 		 k.resetY();
 		 repaint();
