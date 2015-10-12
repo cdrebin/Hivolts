@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 //Claire Drebin 
 //September 15, 2015 
 
-public class HivoltsGame extends JFrame{
+public class HivoltsGameState extends JFrame{
 	private final Color CYAN = new Color(0x91D8E2);
 
 	//screen refers to the pop-up window 
@@ -39,7 +39,7 @@ public class HivoltsGame extends JFrame{
 	 UserKeyPress k = new UserKeyPress();
 	 
 	//Hivolts constructor
-	public HivoltsGame() {
+	public HivoltsGameState() {
 		init();
 	}
 	
