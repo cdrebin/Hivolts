@@ -79,6 +79,8 @@ public class HivoltsGameState extends JFrame{
 		}
 		drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
 		drawFences(g);
+		
+		
 		UpdateGameState(k);
 	}
 	
@@ -313,14 +315,26 @@ public class HivoltsGameState extends JFrame{
 	  */
 	 public void UpdateGameState(UserKeyPress k){
 		 boolean justJumped = false;
-		 
-		 int xMove = k.getMoveX();
-		 int yMove = k.getMoveY();
-		 move(you, (xMove), (yMove), justJumped);
 		 if (k.action == "jump"){
-			justJumped = true; 
+				
+				try {
+				    Thread.sleep(1000);
+				} catch(InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+				
+				int xMove = k.getMoveX();
+				int yMove = k.getMoveY();
+				move(you, (xMove), (yMove), justJumped);
+				justJumped = true;
+			 }
+		 else{
+			 int xMove = k.getMoveX();
+			 int yMove = k.getMoveY();
+			 move(you, (xMove), (yMove), justJumped);
 		 }
-
+		 
+		
 		 k.resetX();
 		 k.resetY();
 		 repaint();
