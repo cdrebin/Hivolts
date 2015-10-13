@@ -37,6 +37,7 @@ public class HivoltsGameState extends JFrame{
 	 //initalize character and fence arrays
 	 Character mho[] = new Character[12];
 	 Character fences[] = new Character[20];
+	 Tile tiles[][] = new Tile[12][12];
 	 
 	 UserKeyPress k = new UserKeyPress();
 	 
@@ -60,7 +61,7 @@ public class HivoltsGameState extends JFrame{
 		 screenH = getHeight();
 		//initializeArray(mho);
 		//initializeArray(fences);
-		initializeGame(mho, fences, you);
+		initializeGame(mho, fences, you, tiles);
 	}
 	
 	/*
@@ -80,8 +81,6 @@ public class HivoltsGameState extends JFrame{
 		}
 		drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
 		drawFences(g);
-		
-		
 		UpdateGameState(k);
 	}
 	
@@ -97,7 +96,6 @@ public class HivoltsGameState extends JFrame{
 			//horizontal
 			g.drawLine(0, Gridy2Screeny(i), GridWidth2ScreenWidth(GRIDW), Gridy2Screeny(i));
 		}
-	
 	}
 	
 	/**
@@ -179,7 +177,7 @@ public class HivoltsGameState extends JFrame{
 		 }
 	 }
 	 
-	public void initializeGame(Character mhos[], Character fences[], Character you) {
+	public void initializeGame(Character mhos[], Character fences[], Character you, Tile tiles[][]) {
 		ArrayList<Integer[]> array = coords();
 		ArrayList<Integer[]> newArray = new ArrayList<Integer[]>();
 		for (int i = 0; i < 33; i++) {
@@ -189,11 +187,16 @@ public class HivoltsGameState extends JFrame{
 		}
 		for (int i = 0; i < 12; i++) {
 			 mhos[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
+			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()] = new Tile(false, "mho", mhos[i].getXCoord(), 
+					 mhos[i].getYCoord());
 		}			
 		for (int i = 0; i < 20; i++) {
-			 fences[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
+			fences[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
+			 tiles[fences[i].getXCoord()][fences[i].getYCoord()] = new Tile(false, "fence", fences[i].getXCoord(), 
+					 fences[i].getYCoord());
 		}
 		 you.setXCoord(newArray.get(32)[0]); you.setYCoord(newArray.get(32)[1]);
+		 tiles[you.getXCoord()][you.getYCoord()] = new Tile(false, "you", you.getXCoord(), you.getYCoord());
 	}
 	
 	/**
@@ -277,13 +280,12 @@ public class HivoltsGameState extends JFrame{
 	 * @param moveY movement in y direction
 	 * @param justJumped boolean displaying status of jump 
 	 */
-	  public void move(Character mho, int moveX, int moveY){
+	 public void move(Character mho, int moveX, int moveY){
 		 if(k.action == "jump" && k.getJump() == false) {
 				int x = (int)(Math.random() * 9 + 1);
 				int y = (int)(Math.random() * 9 + 1 );
 				 mho.setXCoord(x);
 				 mho.setYCoord(y);
-				 
 			 }
 			
 		 /*
@@ -309,7 +311,7 @@ public class HivoltsGameState extends JFrame{
 	  * @param k UserKeyPress that implements keyListener
 	  */
 	 public void UpdateGameState(UserKeyPress k){
-
+		
 		 if (k.action == "jump" && k.getJump() == false){
 				int xMove = k.getMoveX();
 				int yMove = k.getMoveY();
@@ -318,7 +320,7 @@ public class HivoltsGameState extends JFrame{
 				k.resetY();
 				repaint();
 				k.setJump(true);
-				
+				System.out.println("bye");
 
 			 }
 		 else{
@@ -329,10 +331,5 @@ public class HivoltsGameState extends JFrame{
 			 k.resetY();
 			 repaint();
 		 }
-		 
-		
-		 
 	 }
-
-	
 }
