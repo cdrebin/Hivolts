@@ -277,8 +277,8 @@ public class HivoltsGameState extends JFrame{
 	 * @param moveY movement in y direction
 	 * @param justJumped boolean displaying status of jump 
 	 */
-	 public void move(Character mho, int moveX, int moveY){
-		 if(k.action == "jump" && k.getJump() == false){
+	  public void move(Character mho, int moveX, int moveY){
+		 if(k.action == "jump" && k.getJump() == false) {
 				int x = (int)(Math.random() * 9 + 1);
 				int y = (int)(Math.random() * 9 + 1 );
 				 mho.setXCoord(x);
@@ -302,9 +302,6 @@ public class HivoltsGameState extends JFrame{
 			 mho.setXCoord(mho.getXCoord() + moveX);
 			 mho.setYCoord(mho.getYCoord() + moveY); 
 		 }
-		 
-		
-		 
 	 }
 	 
 	 /**
