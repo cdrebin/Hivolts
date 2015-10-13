@@ -181,7 +181,12 @@ public class HivoltsGameState extends JFrame{
 		 }
 	 }
 	 
-	public void initializeGame(Character mhos[], Character fences[], Character you, Tile tiles[][]) {
+		public void initializeGame(Character mhos[], Character fences[], Character you, Tile tiles[][]) {
+		for (int i = 0; i < 12; i++) {
+			for (int j = 0; j < 12; j++) {
+				tiles[i][j] = new Tile();
+			}
+		}
 		ArrayList<Integer[]> array = coords();
 		ArrayList<Integer[]> newArray = new ArrayList<Integer[]>();
 		for (int i = 0; i < 33; i++) {
@@ -191,16 +196,20 @@ public class HivoltsGameState extends JFrame{
 		}
 		for (int i = 0; i < 12; i++) {
 			 mhos[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
-			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()] = new Tile(false, "mho", mhos[i].getXCoord(), 
-					 mhos[i].getYCoord());
+			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setXCoord(mhos[i].getXCoord());
+			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setYCoord(mhos[i].getYCoord());
+			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setType("mho");
 		}			
 		for (int i = 0; i < 20; i++) {
 			fences[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
-			 tiles[fences[i].getXCoord()][fences[i].getYCoord()] = new Tile(false, "fence", fences[i].getXCoord(), 
-					 fences[i].getYCoord());
+			tiles[fences[i].getXCoord()][fences[i].getYCoord()].setXCoord(fences[i].getXCoord());
+			tiles[fences[i].getXCoord()][fences[i].getYCoord()].setYCoord(fences[i].getYCoord());
+			tiles[fences[i].getXCoord()][fences[i].getYCoord()].setType("fence");
 		}
 		 you.setXCoord(newArray.get(32)[0]); you.setYCoord(newArray.get(32)[1]);
-		 tiles[you.getXCoord()][you.getYCoord()] = new Tile(false, "you", you.getXCoord(), you.getYCoord());
+		 tiles[you.getXCoord()][you.getYCoord()].setXCoord(you.getXCoord());
+		 tiles[you.getXCoord()][you.getYCoord()].setYCoord(you.getYCoord());
+		 tiles[you.getXCoord()][you.getYCoord()].setType("you");
 	}
 	
 	/**
