@@ -98,8 +98,6 @@ public class UserKeyPress implements KeyListener{
 		if (button == 'j'){
 			justJumped = false;
 		}
-		
-		System.out.println("hi");
 	}
 
 	@Override
