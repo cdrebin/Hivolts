@@ -30,6 +30,7 @@ public class HivoltsGameState extends JFrame{
 	 int canvasOx = 0;
 	 int canvasOy = 22;
 
+	 boolean gameOver = false;
 	 //set you character with random coordinates
 	 Character you = new Character();
 	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
@@ -37,11 +38,9 @@ public class HivoltsGameState extends JFrame{
 	 //initalize character and fence arrays
 	 Character mho[] = new Character[12];
 	 Character fences[] = new Character[20];
-<<<<<<< Updated upstream
+
 	 Tile tiles[][] = new Tile[12][12];
-=======
-	 Tile tiles[] = new Tile[144];
->>>>>>> Stashed changes
+
 	 
 	 UserKeyPress k = new UserKeyPress();
 	 
@@ -73,19 +72,29 @@ public class HivoltsGameState extends JFrame{
 	 * @see java.awt.Window#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g){
-		g.setColor(Color.WHITE);
-		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
-		drawGrid(g);
-		// draw smileys
-		for (int i = 0; i < mho.length; i++) {
-			drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, CYAN, 0, 25);
-		}		
-		for (int i = 0; i < fences.length; i++) {
-			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
-		}
-		drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
-		drawFences(g);
 		UpdateGameState(k);
+		if (gameOver == false){
+			g.setColor(Color.WHITE);
+			g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
+			drawGrid(g);
+			// draw smileys
+			for (int i = 0; i < mho.length; i++) {
+				drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, CYAN, 0, 25);
+			}		
+			for (int i = 0; i < fences.length; i++) {
+				drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
+			}
+			drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
+			drawFences(g);
+		}
+		
+		else{
+			g.setColor(Color.BLACK);
+			g.fillRect(0,0, screenW, screenH);
+			g.setColor(Color.WHITE);
+			g.drawString("GAME OVER :(", screenW / 2, screenH / 2);
+		}
+		
 	}
 	
 	/**
@@ -323,8 +332,9 @@ public class HivoltsGameState extends JFrame{
 	  * Update game state to current values
 	  * @param k UserKeyPress that implements keyListener
 	  */
-	 public void UpdateGameState(UserKeyPress k){
+	 public boolean UpdateGameState(UserKeyPress k){
 		
+		 
 		 if (k.action == "jump" && k.getJump() == false){
 				int xMove = k.getMoveX();
 				int yMove = k.getMoveY();
@@ -344,5 +354,22 @@ public class HivoltsGameState extends JFrame{
 			 k.resetY();
 			 repaint();
 		 }
+		 
+		 gameOver = testGameOver();
+		 return gameOver;
+	 }
+	 
+	 public boolean testGameOver(){
+		 if(tiles[you.getXCoord()][you.getYCoord()].getType().equals("fence") || 
+				 (tiles[you.getXCoord()][you.getYCoord()].getType().equals("mho"))) {
+			gameOver = true;
+		 }
+		 else{
+			gameOver = false; 
+		 }
+		 
+		 return gameOver;
 	 }
 }
+
+
