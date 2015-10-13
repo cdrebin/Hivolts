@@ -6,6 +6,7 @@ public class UserKeyPress implements KeyListener{
 	String action;
 	int moveX = 0;
 	int moveY = 0;
+	boolean justJumped = false;
 	
 	UserKeyPress(){
 	}
@@ -29,7 +30,15 @@ public class UserKeyPress implements KeyListener{
 	public void resetY(){
 		moveY = 0;
 	}
-		
+	
+	public boolean getJump(){
+		return justJumped;
+	}
+	
+	public void setJump(boolean value){
+		justJumped = value;
+	}
+	
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -85,8 +94,12 @@ public class UserKeyPress implements KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		char button = e.getKeyChar();
+		if (button == 'j'){
+			justJumped = false;
+		}
 		
+		System.out.println("hi");
 	}
 
 	@Override

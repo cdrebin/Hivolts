@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 public class HivoltsGameState extends JFrame{
 	private final Color CYAN = new Color(0x91D8E2);
 
+	
+	 
 	//screen refers to the pop-up window 
 	 int screenW;
 	 int screenH;
@@ -275,19 +277,15 @@ public class HivoltsGameState extends JFrame{
 	 * @param moveY movement in y direction
 	 * @param justJumped boolean displaying status of jump 
 	 */
-	 public void move(Character mho, int moveX, int moveY, boolean justJumped){
+	 public void move(Character mho, int moveX, int moveY){
 		 if(k.action == "jump"){
-			 if (justJumped == false){
 				int x = (int)(Math.random() * 9 + 1);
 				int y = (int)(Math.random() * 9 + 1 );
 				 mho.setXCoord(x);
 				 mho.setYCoord(y);
-				 justJumped = true;
+				 
 			 }
-			 else {
-			 }
-		 }
-		
+			
 		 /*
 		  * Conditional statements testing to see if mho is on an edge or a corner, 
 		  * then updates coordinates based on key pressed by user
@@ -314,30 +312,29 @@ public class HivoltsGameState extends JFrame{
 	  * @param k UserKeyPress that implements keyListener
 	  */
 	 public void UpdateGameState(UserKeyPress k){
-		 boolean justJumped = false;
-		 if (k.action == "jump"){
-				
-				try {
-				    Thread.sleep(1000);
-				} catch(InterruptedException ex) {
-				    Thread.currentThread().interrupt();
-				}
-				
+		
+		 if (k.action == "jump" && k.getJump() == false){
 				int xMove = k.getMoveX();
 				int yMove = k.getMoveY();
-				move(you, (xMove), (yMove), justJumped);
-				justJumped = true;
+				move(you, (xMove), (yMove));
+				k.resetX();
+				k.resetY();
+				repaint();
+				k.setJump(true);
+				System.out.println("bye");
+
 			 }
 		 else{
 			 int xMove = k.getMoveX();
 			 int yMove = k.getMoveY();
-			 move(you, (xMove), (yMove), justJumped);
+			 move(you, (xMove), (yMove));
+			 k.resetX();
+			 k.resetY();
+			 repaint();
 		 }
 		 
 		
-		 k.resetX();
-		 k.resetY();
-		 repaint();
+		 
 	 }
 
 	
