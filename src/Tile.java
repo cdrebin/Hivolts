@@ -11,7 +11,7 @@ public class Tile {
 		yCoord = 0;
 	}
 	
-	Tile(Boolean empty, String type, int xCoord, int yCoord){
+	Tile(String type, int xCoord, int yCoord){
 		this.type = type;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
@@ -40,5 +40,4 @@ public class Tile {
 	public void setType(String newType){
 		type = newType;
 	}
-	
 }
