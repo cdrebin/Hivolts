@@ -37,7 +37,11 @@ public class HivoltsGameState extends JFrame{
 	 //initalize character and fence arrays
 	 Character mho[] = new Character[12];
 	 Character fences[] = new Character[20];
+<<<<<<< Updated upstream
 	 Tile tiles[][] = new Tile[12][12];
+=======
+	 Tile tiles[] = new Tile[144];
+>>>>>>> Stashed changes
 	 
 	 UserKeyPress k = new UserKeyPress();
 	 
