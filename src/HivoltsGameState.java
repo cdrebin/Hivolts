@@ -31,7 +31,7 @@ public class HivoltsGameState extends JFrame{
 	 int canvasOy = 22;
 
 	 //set you character with random coordinates
-	 Character you = new Character(randomXCoord(), randomYCoord());
+	 Character you = new Character();
 	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
 	 
 	 //initalize character and fence arrays
@@ -60,8 +60,7 @@ public class HivoltsGameState extends JFrame{
 		 screenH = getHeight();
 		//initializeArray(mho);
 		//initializeArray(fences);
-		initializeFencesAndMhos(mho, fences);
-		
+		initializeGame(mho, fences, you);
 	}
 	
 	/*
@@ -180,7 +179,7 @@ public class HivoltsGameState extends JFrame{
 		 }
 	 }
 	 
-	public void initializeFencesAndMhos(Character array1[], Character array2[]) {
+	public void initializeGame(Character mhos[], Character fences[], Character you) {
 		ArrayList<Integer[]> array = coords();
 		ArrayList<Integer[]> newArray = new ArrayList<Integer[]>();
 		for (int i = 0; i < 33; i++) {
@@ -189,11 +188,12 @@ public class HivoltsGameState extends JFrame{
 			array.remove(n);
 		}
 		for (int i = 0; i < 12; i++) {
-			 array1[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
+			 mhos[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
 		}			
 		for (int i = 0; i < 20; i++) {
-			 array2[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
+			 fences[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
 		}
+		 you.setXCoord(newArray.get(32)[0]); you.setYCoord(newArray.get(32)[1]);
 	}
 	
 	/**
