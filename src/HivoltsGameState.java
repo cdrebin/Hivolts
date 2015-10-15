@@ -88,6 +88,8 @@ public class HivoltsGameState extends JFrame{
 			}
 			drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
 			drawFences(g);
+			repaint();
+
 		}
 		
 		else{
@@ -367,7 +369,6 @@ public class HivoltsGameState extends JFrame{
 						keyPress.resetY();
 					}
 					
-					repaint();
 				}
 				
 				else{
@@ -377,7 +378,6 @@ public class HivoltsGameState extends JFrame{
 					move(you, (xMove), (yMove));
 					keyPress.resetX();
 					keyPress.resetY();
-					repaint();
 				}
 				
 				
@@ -391,7 +391,6 @@ public class HivoltsGameState extends JFrame{
 			 move(you, (xMove), (yMove));
 			 keyPress.resetX();
 			 keyPress.resetY();
-			 repaint();
 		 }
 		 
 		 gameOver = testGameOver();
