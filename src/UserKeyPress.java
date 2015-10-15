@@ -15,30 +15,56 @@ public class UserKeyPress implements KeyListener{
 	UserKeyPress(){
 	}
 	
+	/**
+	 * accessor method for action
+	 * @return which action should be taken
+	 */
 	public String getAction(){
 		return action;
 	}
 	
+	/**
+	 * accessor method for moveX
+	 * @return value of moveX describing movement in x direction
+	 */
 	public int getMoveX(){
 		return moveX;
 	}
 	
+	/**
+	 * accessor method for moveY
+	 * @return value of moveY describing movement in y direction
+	 */
 	public int getMoveY(){
 		return moveY;
 	}
 	
+	/**
+	 * resets the value of moveX to zero
+	 */
 	public void resetX(){
 		moveX = 0;
 	}
 	
+	/**
+	 * resets the value of moveY to zero
+	 */
 	public void resetY(){
 		moveY = 0;
 	}
 	
+	/**
+	 * accessor method for justJumped
+	 * @return justJumped
+	 */
 	public boolean getJump(){
 		return justJumped;
 	}
 	
+	/**
+	 * mutator method for justJumped, sets it to true or false
+	 * @param value state of jumping (true or false)
+	 */
 	public void setJump(boolean value){
 		justJumped = value;
 	}

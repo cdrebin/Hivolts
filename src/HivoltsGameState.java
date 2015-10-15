@@ -42,7 +42,7 @@ public class HivoltsGameState extends JFrame{
 	 Tile tiles[][] = new Tile[12][12];
 
 	 
-	 UserKeyPress k = new UserKeyPress();
+	 UserKeyPress keyPress = new UserKeyPress();
 	 
 	//Hivolts constructor
 	public HivoltsGameState() {
@@ -57,7 +57,7 @@ public class HivoltsGameState extends JFrame{
 		setBackground(Color.WHITE);
 		repaint();
 		
-		addKeyListener(k);
+		addKeyListener(keyPress);
 		
 		//set screen width and height to actual values of window
 		 screenW = getWidth();
@@ -72,7 +72,7 @@ public class HivoltsGameState extends JFrame{
 	 * @see java.awt.Window#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g){
-		UpdateGameState(k);
+		UpdateGameState(keyPress);
 
 		if (gameOver == false){
 			g.setColor(Color.WHITE);
@@ -95,9 +95,16 @@ public class HivoltsGameState extends JFrame{
 			g.fillRect(0,0, screenW, screenH);
 			g.setColor(Color.WHITE);
 			g.drawString("GAME OVER :(", screenW / 2, screenH / 2);
+			
 		}
 		
-		UpdateGameState(k);
+		try {
+		    Thread.sleep(100);
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
+		
+	
 	}
 	
 	/**Created by Claire Drebin
@@ -307,7 +314,7 @@ public class HivoltsGameState extends JFrame{
 	 * @param justJumped boolean displaying status of jump 
 	 */
 	 public void move(Character mho, int moveX, int moveY){
-		 if(k.action == "jump" && k.getJump() == false) {
+		 if(keyPress.action == "jump" && keyPress.getJump() == false) {
 				int x = (int)(Math.random() * 9 + 1);
 				int y = (int)(Math.random() * 9 + 1 );
 				 mho.setXCoord(x);
@@ -325,13 +332,13 @@ public class HivoltsGameState extends JFrame{
 		 int upperBound = 1;
 		 int lowerBound = 10;
 		 
-		 if(mho.getXCoord() >= rightBound && ((k.action == "right") || (k.action == "up and right") || (k.action == "down and right"))) {
+		 if(mho.getXCoord() >= rightBound && ((keyPress.action == "right") || (keyPress.action == "up and right") || (keyPress.action == "down and right"))) {
 		 }
-		 else if (mho.getXCoord() <= leftBound && ((k.action == "left") || (k.action == "down and left") || (k.action == "up and left"))) {
+		 else if (mho.getXCoord() <= leftBound && ((keyPress.action == "left") || (keyPress.action == "down and left") || (keyPress.action == "up and left"))) {
 		 }
-		 else if (mho.getYCoord() >= lowerBound && ((k.action == "down") || (k.action == "down and left") || (k.action == "down and right"))) {
+		 else if (mho.getYCoord() >= lowerBound && ((keyPress.action == "down") || (keyPress.action == "down and left") || (keyPress.action == "down and right"))) {
 		 }
-		 else if (mho.getYCoord() <= upperBound && ((k.action == "up") || (k.action == "up and right") || (k.action == "up and left"))) {
+		 else if (mho.getYCoord() <= upperBound && ((keyPress.action == "up") || (keyPress.action == "up and right") || (keyPress.action == "up and left"))) {
 		 }
 		 else {
 			 mho.setXCoord(mho.getXCoord() + moveX);
@@ -341,28 +348,49 @@ public class HivoltsGameState extends JFrame{
 	 
 	 /**Created by Claire
 	  * Update game state to current values
-	  * @param k UserKeyPress that implements keyListener
+	  * @param keyPress UserKeyPress that implements keyListener
 	  */
-	 public boolean UpdateGameState(UserKeyPress k){
+	 public boolean UpdateGameState(UserKeyPress keyPress){
 		
 		 
-		 if (k.action == "jump" && k.getJump() == false){
-				int xMove = k.getMoveX();
-				int yMove = k.getMoveY();
-				move(you, (xMove), (yMove));
-				k.resetX();
-				k.resetY();
-				repaint();
-				k.setJump(true);
+		 if (keyPress.action == "jump" && keyPress.getJump() == false){
+				
+				if(tiles[you.getXCoord()][you.getYCoord()].getType().equals("fence")){
+					
+					while((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence")){
+						System.out.println("Sitting on a fence");
+
+						int xMove = keyPress.getMoveX();
+						int yMove = keyPress.getMoveY();
+						move(you, (xMove), (yMove));
+						keyPress.resetX();
+						keyPress.resetY();
+					}
+					
+					repaint();
+				}
+				
+				else{
+					System.out.println("NOT sitting on a fence");
+					int xMove = keyPress.getMoveX();
+					int yMove = keyPress.getMoveY();
+					move(you, (xMove), (yMove));
+					keyPress.resetX();
+					keyPress.resetY();
+					repaint();
+				}
+				
+				
+				keyPress.setJump(true);
 				
 
 			 }
 		 else{
-			 int xMove = k.getMoveX();
-			 int yMove = k.getMoveY();
+			 int xMove = keyPress.getMoveX();
+			 int yMove = keyPress.getMoveY();
 			 move(you, (xMove), (yMove));
-			 k.resetX();
-			 k.resetY();
+			 keyPress.resetX();
+			 keyPress.resetY();
 			 repaint();
 		 }
 		 
@@ -375,10 +403,15 @@ public class HivoltsGameState extends JFrame{
 	  * @return value of gameOver (false = game is NOT over, true = game IS over)
 	  */
 	 public boolean testGameOver(){
-		 if((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence") || 
-				 ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho"))) {
+		 if(keyPress.getAction() != "jump" &&( (tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence") || 
+				 ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho")))) {
 			gameOver = true;
 		 }
+		 
+		 else if (keyPress.getAction() == "jump" && ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho"))){
+			 gameOver = true;
+		 }
+			
 		 else{
 			gameOver = false; 
 		 }
