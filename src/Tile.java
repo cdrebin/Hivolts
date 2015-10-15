@@ -40,4 +40,5 @@ public class Tile {
 	public void setType(String newType){
 		type = newType;
 	}
+	
 }
