@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 
-//Claire Drebin 
-//September 15, 2015 
+//Claire Drebin and Camille Burbonnais
+//October 15, 2015 
 
 public class HivoltsGameState extends JFrame{
 	private final Color CYAN = new Color(0x91D8E2);
@@ -72,11 +72,12 @@ public class HivoltsGameState extends JFrame{
 	 * @see java.awt.Window#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g){
-		UpdateGameState(k);
+		gameOver = false;
 		if (gameOver == false){
 			g.setColor(Color.WHITE);
 			g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
 			drawGrid(g);
+			
 			// draw smileys
 			for (int i = 0; i < mho.length; i++) {
 				drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, CYAN, 0, 25);
@@ -95,6 +96,7 @@ public class HivoltsGameState extends JFrame{
 			g.drawString("GAME OVER :(", screenW / 2, screenH / 2);
 		}
 		
+		UpdateGameState(k);
 	}
 	
 	/**
@@ -296,7 +298,7 @@ public class HivoltsGameState extends JFrame{
 	}
 	 
 	/**
-	 * Move a character based on what key the user presses
+	 * Changes the coordinates of a character based on what key the user presses
 	 * @param mho Character object, either mho or you
 	 * @param moveX movement in x direction
 	 * @param moveY movement in y direction
@@ -309,18 +311,25 @@ public class HivoltsGameState extends JFrame{
 				 mho.setXCoord(x);
 				 mho.setYCoord(y);
 			 }
-			
+		
+		 
 		 /*
 		  * Conditional statements testing to see if mho is on an edge or a corner, 
 		  * then updates coordinates based on key pressed by user
 		  */
-		 if(mho.getXCoord() >= 10 && ((k.action == "right") || (k.action == "up and right") || (k.action == "down and right"))) {
+		 
+		 int leftBound = 1;
+		 int rightBound = 10;
+		 int upperBound = 1;
+		 int lowerBound = 10;
+		 
+		 if(mho.getXCoord() >= rightBound && ((k.action == "right") || (k.action == "up and right") || (k.action == "down and right"))) {
 		 }
-		 else if (mho.getXCoord() <= 1 && ((k.action == "left") || (k.action == "down and left") || (k.action == "up and left"))) {
+		 else if (mho.getXCoord() <= leftBound && ((k.action == "left") || (k.action == "down and left") || (k.action == "up and left"))) {
 		 }
-		 else if (mho.getYCoord() >= 10 && ((k.action == "down") || (k.action == "down and left") || (k.action == "down and right"))) {
+		 else if (mho.getYCoord() >= lowerBound && ((k.action == "down") || (k.action == "down and left") || (k.action == "down and right"))) {
 		 }
-		 else if (mho.getYCoord() <= 1 && ((k.action == "up") || (k.action == "up and right") || (k.action == "up and left"))) {
+		 else if (mho.getYCoord() <= upperBound && ((k.action == "up") || (k.action == "up and right") || (k.action == "up and left"))) {
 		 }
 		 else {
 			 mho.setXCoord(mho.getXCoord() + moveX);
