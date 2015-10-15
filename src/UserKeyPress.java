@@ -1,7 +1,11 @@
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-
+/**
+ * Implementation of key listener
+ * @author Claire Drebin
+ *
+ */
 public class UserKeyPress implements KeyListener{
 	String action;
 	int moveX = 0;

@@ -1,5 +1,10 @@
 import java.awt.Color;
 
+/**
+ * 
+ * @author Camille Bourbonnais
+ *
+ */
 public class Character{
 	private int size;
 	private Color baseColor;
