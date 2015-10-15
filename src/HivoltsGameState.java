@@ -49,7 +49,7 @@ public class HivoltsGameState extends JFrame{
 		init();
 	}
 	
-	/**
+	/**Majority of init() created by Claire Drebin, initializeGame() created by Camille Bourbonnais
 	 * Initializes window, grid, keyListener, fence and mho arrays
 	 */
 	public void init() {
@@ -67,12 +67,13 @@ public class HivoltsGameState extends JFrame{
 		initializeGame(mho, fences, you, tiles);
 	}
 	
-	/*
+	/* Created by Claire and Camille
 	 * (non-Javadoc)
 	 * @see java.awt.Window#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g){
-		gameOver = false;
+		UpdateGameState(k);
+
 		if (gameOver == false){
 			g.setColor(Color.WHITE);
 			g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
@@ -99,7 +100,7 @@ public class HivoltsGameState extends JFrame{
 		UpdateGameState(k);
 	}
 	
-	/**
+	/**Created by Claire Drebin
 	 * Draw grid on screen
 	 * @param g Graphics object
 	 */
@@ -113,7 +114,7 @@ public class HivoltsGameState extends JFrame{
 		}
 	}
 	
-	/**
+	/** Created by Camille
 	 * Draws a simple smiley face with eyes and a mouth
 	 * @param g Graphics Object
 	 * @param x x-coordinate of smiley face
@@ -133,7 +134,7 @@ public class HivoltsGameState extends JFrame{
 		g.drawArc(x+10, y+mouth, 20, 10, degree, 180);
 	}
 	
-	/**
+	/** Created by Camille
 	 * draws the fences lining the exterior of the grid
 	 * @param g Graphics object
 	 */
@@ -156,7 +157,7 @@ public class HivoltsGameState extends JFrame{
 		}
 	}
 	
-	/**
+	/** Created by Camille
 	 * Draws a single fence 
 	 * @param g Graphics object
 	 * @param x x-coordinate of fence
@@ -176,54 +177,55 @@ public class HivoltsGameState extends JFrame{
 		g.fillRect(x-36, y+13, 40, 5);
 		g.fillRect(x-36, y+28, 40, 5);
 	}
-	
-	/*	for (int i = 0; i < mho.length; i++) {
-			drawSmiley(g, mho[i].getXCoord(), mho[i].getYCoord(),Color.WHITE, CYAN, 0, 25);
-		}		
-		for (int i = 0; i < fences.length; i++) {
-			drawOneFence(g, fences[i].getXCoord(), fences[i].getYCoord());
-		}
-		drawSmiley(g, you.getXCoord(), you.getYCoord(), CYAN, Color.WHITE, 180, 22); 
-	*/
-	 
-	
+
+	/** Created by Camille
+	 * Initialize an array that is used to create all objects
+	 * @param array type of character array
+	 */
 	 public void initializeArray(Character array[]) {
 		 for (int i = 0; i < array.length; i++) {
 		 }
 	 }
 	 
-		public void initializeGame(Character mhos[], Character fences[], Character you, Tile tiles[][]) {
-		for (int i = 0; i < 12; i++) {
-			for (int j = 0; j < 12; j++) {
-				tiles[i][j] = new Tile();
-			}
+	/**Created by Camille
+	 * 
+	 * @param mhos
+	 * @param fences
+	 * @param you
+	 * @param tiles
+	 */
+	public void initializeGame(Character mhos[], Character fences[], Character you, Tile tiles[][]) {
+	for (int i = 0; i < 12; i++) {
+		for (int j = 0; j < 12; j++) {
+			tiles[i][j] = new Tile();
 		}
-		ArrayList<Integer[]> array = coords();
-		ArrayList<Integer[]> newArray = new ArrayList<Integer[]>();
-		for (int i = 0; i < 33; i++) {
-			int n = (int)(Math.random() * array.size());
-			newArray.add(array.get(n));
-			array.remove(n);
-		}
-		for (int i = 0; i < 12; i++) {
-			 mhos[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
-			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setXCoord(mhos[i].getXCoord());
-			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setYCoord(mhos[i].getYCoord());
-			 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setType("mho");
-		}			
-		for (int i = 0; i < 20; i++) {
-			fences[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
-			tiles[fences[i].getXCoord()][fences[i].getYCoord()].setXCoord(fences[i].getXCoord());
-			tiles[fences[i].getXCoord()][fences[i].getYCoord()].setYCoord(fences[i].getYCoord());
-			tiles[fences[i].getXCoord()][fences[i].getYCoord()].setType("fence");
-		}
-		 you.setXCoord(newArray.get(32)[0]); you.setYCoord(newArray.get(32)[1]);
-		 tiles[you.getXCoord()][you.getYCoord()].setXCoord(you.getXCoord());
-		 tiles[you.getXCoord()][you.getYCoord()].setYCoord(you.getYCoord());
-		 tiles[you.getXCoord()][you.getYCoord()].setType("you");
 	}
-	
-	/**
+	ArrayList<Integer[]> array = coords();
+	ArrayList<Integer[]> newArray = new ArrayList<Integer[]>();
+	for (int i = 0; i < 33; i++) {
+		int n = (int)(Math.random() * array.size());
+		newArray.add(array.get(n));
+		array.remove(n);
+	}
+	for (int i = 0; i < 12; i++) {
+		 mhos[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
+		 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setXCoord(mhos[i].getXCoord());
+		 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setYCoord(mhos[i].getYCoord());
+		 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setType("mho");
+	}			
+	for (int i = 0; i < 20; i++) {
+		fences[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
+		tiles[fences[i].getXCoord()][fences[i].getYCoord()].setXCoord(fences[i].getXCoord());
+		tiles[fences[i].getXCoord()][fences[i].getYCoord()].setYCoord(fences[i].getYCoord());
+		tiles[fences[i].getXCoord()][fences[i].getYCoord()].setType("fence");
+	}
+	 you.setXCoord(newArray.get(32)[0]); you.setYCoord(newArray.get(32)[1]);
+	 tiles[you.getXCoord()][you.getYCoord()].setXCoord(you.getXCoord());
+	 tiles[you.getXCoord()][you.getYCoord()].setYCoord(you.getYCoord());
+	 tiles[you.getXCoord()][you.getYCoord()].setType("you");
+}
+
+	/**Created by Claire
 	 * Converts grid x-coordinates to screen coordinate equivalent
 	 * @param gx x-coordinate on grid system (12x12)
 	 * @return x-coordinate on screen system (screen width x screen height)
@@ -233,7 +235,7 @@ public class HivoltsGameState extends JFrame{
 			return sX;
 		}	 
 	
-	 /**
+	 /**Created by Claire
 	  * Converts grid x-coordinates to screen coordinate equivalent 
 	  * @param gy y-coordinate on grid system (12x12)
 	  * @return y-coordinate on screen system (screen width x screen height)
@@ -243,7 +245,7 @@ public class HivoltsGameState extends JFrame{
 			return sY;
 		}	 
 	 
-	 /**
+	 /**Created by Claire
 	  * Converts grid width to screen width
 	  * @param gW grid width
 	  * @return screen width
@@ -253,7 +255,7 @@ public class HivoltsGameState extends JFrame{
 		 return sW;
 	 }
 	 
-	 /**
+	 /**Created by Claire
 	  * Converts grid height to screen height
 	  * @param gH grid height
 	  * @return screen height
@@ -263,7 +265,7 @@ public class HivoltsGameState extends JFrame{
 		 return sH;
 	 }
 	 
-	 /**
+	 /**Created by Claire
 	  * Generate random x-coordinate between 1 and 11
 	  * @return random x-coordinate
 	  */
@@ -272,7 +274,7 @@ public class HivoltsGameState extends JFrame{
 		 return randomCoord;
 	 }
 	 
-	 /**
+	 /**Created by Claire
 	  * Generate random y-coordinate between 1 and 11
 	  * @return random y-coordinate
 	  */
@@ -281,7 +283,7 @@ public class HivoltsGameState extends JFrame{
 		 return randomCoord;
 	 } 
 	 
-	/**
+	/**Created by Camille
 	 * gets ArrayList with 144 arrays starting from [0,0] to [11,11]
 	 * @return the array
 	 */
@@ -297,7 +299,7 @@ public class HivoltsGameState extends JFrame{
 		return array;
 	}
 	 
-	/**
+	/**Created by Claire
 	 * Changes the coordinates of a character based on what key the user presses
 	 * @param mho Character object, either mho or you
 	 * @param moveX movement in x direction
@@ -337,7 +339,7 @@ public class HivoltsGameState extends JFrame{
 		 }
 	 }
 	 
-	 /**
+	 /**Created by Claire
 	  * Update game state to current values
 	  * @param k UserKeyPress that implements keyListener
 	  */
@@ -352,7 +354,7 @@ public class HivoltsGameState extends JFrame{
 				k.resetY();
 				repaint();
 				k.setJump(true);
-				System.out.println("bye");
+				
 
 			 }
 		 else{
@@ -368,9 +370,13 @@ public class HivoltsGameState extends JFrame{
 		 return gameOver;
 	 }
 	 
+	 /**Created by Claire
+	  * Tests to see if location of "you" is already filled
+	  * @return value of gameOver (false = game is NOT over, true = game IS over)
+	  */
 	 public boolean testGameOver(){
-		 if(tiles[you.getXCoord()][you.getYCoord()].getType().equals("fence") || 
-				 (tiles[you.getXCoord()][you.getYCoord()].getType().equals("mho"))) {
+		 if((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence") || 
+				 ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho"))) {
 			gameOver = true;
 		 }
 		 else{
