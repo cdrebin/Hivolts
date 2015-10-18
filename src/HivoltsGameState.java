@@ -18,7 +18,7 @@ import javax.swing.JPanel;
  *
  */
 
-public class HivoltsGameState extends JFrame implements ActionListener{
+public class HivoltsGameState extends JFrame{
 	private final Color CYAN = new Color(0x91D8E2);
 
 	
@@ -544,9 +544,4 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 		 displayedGameOver = false;
 		 
 	 }
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		
-	}
 }
