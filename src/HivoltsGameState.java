@@ -145,35 +145,12 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 	 * @param g graphics object
 	 */
 	public void displayGameOver(Graphics g){
-		//g.setColor(Color.BLACK);
+		g.setColor(Color.BLACK);
 		g.fillRect(0,0, screenW, screenH);
-		//g.setColor(Color.WHITE);
-		g.drawString("GAME OVER :(", screenW / 2, screenH / 2);
-		g.setColor(Color.CYAN);
-		g.fillRect(39,45,10,10);
-		
-//		JPanel buttonPanel = new JPanel();
-//	
-//		JButton quitButton = new JButton("quit");
-//		
-//		buttonPanel.add(quitButton);
-//		
-//		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
-//		
-	}
-	
-	public void nextAction(){
-		//int action = UserFeedback.choose();	 
-		
-		
-		
-		/**if(action == 1){
-			dispose();
-		}
-		else{
-			initializeGame(fences, fences, you, tiles);
-		}
-		*/
+		g.setColor(Color.WHITE);
+		g.drawString("GAME OVER :(", 300, 300);
+		g.drawString("Would you like to play again? (press y for yes, n for no) ", 250, 350 );
+			
 	}
 	
 	
@@ -521,7 +498,7 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 			 else if (keyPress.action == "no"){
 				 dispose();
 			 }
-			 //nextAction();
+			 
 		 }
 	 }
 	 
