@@ -19,8 +19,7 @@ public class HivoltsGameState extends JFrame{
 	//number of wins and losses
 	boolean win = false;
 	boolean lose = false;
-	int numWins = 0;
-	int numLosses = 0;
+	
 	
 	//screen refers to the pop-up window 
 	 int screenW;
@@ -46,8 +45,12 @@ public class HivoltsGameState extends JFrame{
 	 
 	 //used to signify when game is over
 	 boolean gameOver = false;
+	 
+	 //checks for increments to prevent continuous additions
 	 public boolean displayedGameOver = false;
-
+	 boolean displayedKey = false;
+	 boolean incrementedWin = false;
+	 boolean incrementedLoss = false;
 	 
 	 //set you character with random coordinates
 	 Character you = new Character();
@@ -101,7 +104,6 @@ public class HivoltsGameState extends JFrame{
 		
 		else{
 			displayGameOver(g);	
-			numLosses++;
 			displayedGameOver = true;
 		}
 		
@@ -146,30 +148,48 @@ public class HivoltsGameState extends JFrame{
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0, screenW, screenH);
 		g.setColor(Color.WHITE);
+		String outcome = null;
 		if (win == true){
-			g.drawString("You win! :)", 300, 300);
+			outcome = "win! :)";
 		}
 		else if (lose == true){
-			g.drawString("You lose :(", 300, 300);
+			outcome = "lose. :(";
 		}
 		
-		g.drawString("Would you like to play again? (press y for yes, n for no) ", 250, 350 );
+		if (win == true && incrementedWin == false){
+			you.addWin();
+			incrementedWin = true;
+		}
+		else if (lose == true && incrementedLoss == false){
+			you.addLoss();
+			outcome = "lose. :(";
+			incrementedLoss = true;
+
+		}
+		g.drawString("You " + outcome, 350, 300);
+		g.drawString("Number of wins: "+ you.numWins + " Number of losses: " + you.numLosses, 300, 350);
+		g.drawString("Would you like to play again? (press y for yes, n for no) ", 250, 400 );
 			
 	}
 	
 	public void displayKey(Graphics g){
-		g.setColor(Color.BLACK);
-		g.drawString("Key", 500, 50);
-		g.drawString("q: up and left", 500, 70);
-		g.drawString("w: up", 500, 90);
-		g.drawString("e: up and right", 500, 110);
-		g.drawString("a: left", 500, 130);
-		g.drawString("s: sit (stay on the same square for one turn)", 500, 150);
-		g.drawString("d: right", 500, 170);
-		g.drawString("z: down and left", 500, 190);
-		g.drawString("x: down", 500, 210);
-		g.drawString("c: down and left", 500, 230);
-		g.drawString("j: jump to random square", 500, 250);
+		if (displayedKey == false){
+			g.setColor(Color.BLACK);
+			g.drawString("Key", 500, 50);
+			g.drawString("q: up and left", 500, 70);
+			g.drawString("w: up", 500, 90);
+			g.drawString("e: up and right", 500, 110);
+			g.drawString("a: left", 500, 130);
+			g.drawString("s: sit (stay on the same square for one turn)", 500, 150);
+			g.drawString("d: right", 500, 170);
+			g.drawString("z: down and left", 500, 190);
+			g.drawString("x: down", 500, 210);
+			g.drawString("c: down and left", 500, 230);
+			g.drawString("j: jump to random square", 500, 250);
+		}
+		
+		displayedKey = true;
+		
 	}
 	
 	/**Created by Claire
@@ -510,6 +530,7 @@ public class HivoltsGameState extends JFrame{
 		 
 		 gameOver = testGameOver();
 		 
+		 
 		 if (displayedGameOver == true){
 			 if(keyPress.action == "yes"){
 				 resetGame(g);
@@ -557,6 +578,9 @@ public class HivoltsGameState extends JFrame{
 		 lose = false;
 		 gameOver = false;
 		 displayedGameOver = false;
+		 displayedKey = false;
+		 incrementedWin = false;
+		 incrementedLoss = false;
 		 init();
 		 repaint();
 	 }

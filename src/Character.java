@@ -10,11 +10,15 @@ public class Character{
 	private Color baseColor;
 	private int xCoord;
 	private int yCoord;
+	public int numWins;
+	public int numLosses;
 	
 	Character(){
 		size = 40;
 		xCoord = 0;
 		yCoord = 0;
+		numWins = 0;
+		numLosses = 0;
 	}
 	
 	Character(int size, Color baseColor, int xCoord, int yCoord){
@@ -29,6 +33,13 @@ public class Character{
 		this.yCoord = yCoord;
 	}
 	
+	public void addWin(){
+		numWins++;
+	}
+	
+	public void addLoss(){
+		numLosses++;
+	}
 	public int getSize(){
 		return this.size;
 	}
