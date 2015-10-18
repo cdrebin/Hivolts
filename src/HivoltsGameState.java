@@ -1,10 +1,16 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * Displays and updates the game state of the Hivolts game 
@@ -12,7 +18,7 @@ import javax.swing.JFrame;
  *
  */
 
-public class HivoltsGameState extends JFrame{
+public class HivoltsGameState extends JFrame implements ActionListener{
 	private final Color CYAN = new Color(0x91D8E2);
 
 	
@@ -41,6 +47,8 @@ public class HivoltsGameState extends JFrame{
 	 
 	 //used to signify when game is over
 	 boolean gameOver = false;
+	 public boolean displayedGameOver = false;
+
 	 
 	 //set you character with random coordinates
 	 Character you = new Character();
@@ -54,6 +62,9 @@ public class HivoltsGameState extends JFrame{
 
 	 //initialize key listener
 	 UserKeyPress keyPress = new UserKeyPress();
+
+
+
 	 
 	//Hivolts constructor
 	public HivoltsGameState() {
@@ -83,14 +94,17 @@ public class HivoltsGameState extends JFrame{
 	 * @see java.awt.Window#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g){
+		
 		UpdateGameState(keyPress);
+		
 
 		if (gameOver == false){
 			drawGame(g);
 		}
 		
 		else{
-			displayGameOver(g);
+			displayGameOver(g);	
+			displayedGameOver = true;
 		}
 		
 		try {
@@ -99,7 +113,7 @@ public class HivoltsGameState extends JFrame{
 		    Thread.currentThread().interrupt();
 		}
 		
-	
+		repaint();
 	}
 	
 	/** Created by Camille
@@ -125,15 +139,41 @@ public class HivoltsGameState extends JFrame{
 		repaint();
 	}
 	
+	
 	/** Created by Claire
 	 * display Game Over, clear screen
 	 * @param g graphics object
 	 */
 	public void displayGameOver(Graphics g){
-		g.setColor(Color.BLACK);
+		//g.setColor(Color.BLACK);
 		g.fillRect(0,0, screenW, screenH);
-		g.setColor(Color.WHITE);
+		//g.setColor(Color.WHITE);
 		g.drawString("GAME OVER :(", screenW / 2, screenH / 2);
+		g.setColor(Color.CYAN);
+		g.fillRect(39,45,10,10);
+		
+//		JPanel buttonPanel = new JPanel();
+//	
+//		JButton quitButton = new JButton("quit");
+//		
+//		buttonPanel.add(quitButton);
+//		
+//		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+//		
+	}
+	
+	public void nextAction(){
+		//int action = UserFeedback.choose();	 
+		
+		
+		
+		/**if(action == 1){
+			dispose();
+		}
+		else{
+			initializeGame(fences, fences, you, tiles);
+		}
+		*/
 	}
 	
 	
@@ -381,7 +421,7 @@ public class HivoltsGameState extends JFrame{
 	  * Update game state to current values
 	  * @param keyPress UserKeyPress that implements keyListener
 	  */
-	 public boolean UpdateGameState(UserKeyPress keyPress){
+	 public void UpdateGameState(UserKeyPress keyPress){
 		
 		 
 		 if (keyPress.action == "jump" && keyPress.getJump() == false){
@@ -425,7 +465,10 @@ public class HivoltsGameState extends JFrame{
 		 }
 		 
 		 gameOver = testGameOver();
-		 return gameOver;
+		 
+		 if (displayedGameOver == true){
+			 nextAction();
+		 }
 	 }
 	 
 	 /**Created by Claire
@@ -454,6 +497,17 @@ public class HivoltsGameState extends JFrame{
 		 
 		 return gameOver;
 	 }
+	 
+	 public void resetGame(){
+		 gameOver = false;
+		 displayedGameOver = false;
+		 
+	 }
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
 }
 
 
