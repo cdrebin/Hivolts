@@ -1,16 +1,8 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+
 
 /**
  * Displays and updates the game state of the Hivolts game 
@@ -19,10 +11,10 @@ import javax.swing.JPanel;
  */
 
 public class HivoltsGameState extends JFrame{
+	private static final long serialVersionUID = 1L;
+
 	private final Color CYAN = new Color(0x91D8E2);
 
-	
-	 
 	//screen refers to the pop-up window 
 	 int screenW;
 	 int screenH;
@@ -62,9 +54,6 @@ public class HivoltsGameState extends JFrame{
 
 	 //initialize key listener
 	 UserKeyPress keyPress = new UserKeyPress();
-
-
-
 	 
 	//Hivolts constructor
 	public HivoltsGameState() {
@@ -95,7 +84,7 @@ public class HivoltsGameState extends JFrame{
 	 */
 	public void paint(Graphics g){
 		
-		UpdateGameState(keyPress);
+		UpdateGameState(keyPress, g);
 		
 
 		if (gameOver == false){
@@ -293,51 +282,7 @@ public class HivoltsGameState extends JFrame{
 	 tiles[you.getXCoord()][you.getYCoord()].setType("you");
 }
 	
-	/**Created by Camille
-	 * Makes mhos move during game
-	 */
-	public void moveMhos (Character mho[], Character you) {
-		for (int i = 0; i < mho.length; i++) {
-			moveOneMho(mho[i], you);
-		}
-	}
 	
-	public void moveOneMho (Character mho, Character you) {
-		// if x and x are same, horizontal
-		// if y and y are some, vertical
-		if (you.getXCoord() == mho.getXCoord()) {
-			moveHorizontal(mho, you);
-		}
-		else if (you.getYCoord() == mho.getYCoord()) {
-			moveVertical(mho, you);
-		}
-		else { 
-			moveDiagonal(mho, you);
-		}
-	}
-	
-	public void moveHorizontal (Character mho, Character you) {
-			if (you.getXCoord() - mho.getXCoord() > 0) {
-				mho.setXCoord(mho.getXCoord() + 1);
-			}
-			else {
-				mho.setXCoord(mho.getXCoord() - 1);
-			}
-	}
-	
-	public void moveVertical (Character mho, Character you) {
-		if (you.getXCoord() - mho.getXCoord() > 0) {
-			mho.setXCoord(mho.getXCoord() + 1);
-		}
-		else {
-			mho.setXCoord(mho.getXCoord() - 1);
-		}
-	}
-			
-	public void moveDiagonal (Character mho, Character you) {
-		moveHorizontal(mho, you);
-		moveVertical(mho, you);
-	}
 
 	/**Created by Claire
 	 * Converts grid x-coordinates to screen coordinate equivalent
@@ -412,7 +357,52 @@ public class HivoltsGameState extends JFrame{
 		}
 		return array;
 	}
-	 
+	
+	/**Created by Camille
+	 * Makes mhos move during game
+	 */
+	public void moveMhos (Character mho[], Character you) {
+		for (int i = 0; i < mho.length; i++) {
+			moveOneMho(mho[i], you);
+		}
+	}
+	
+	public void moveOneMho (Character mho, Character you) {
+		// if x and x are same, horizontal
+		// if y and y are some, vertical
+		if (you.getXCoord() == mho.getXCoord()) {
+			moveHorizontal(mho, you);
+		}
+		else if (you.getYCoord() == mho.getYCoord()) {
+			moveVertical(mho, you);
+		}
+		else { 
+			moveDiagonal(mho, you);
+		}
+	}
+	
+	public void moveHorizontal (Character mho, Character you) {
+			if (you.getXCoord() - mho.getXCoord() > 0) {
+				mho.setXCoord(mho.getXCoord() + 1);
+			}
+			else {
+				mho.setXCoord(mho.getXCoord() - 1);
+			}
+	}
+	
+	public void moveVertical (Character mho, Character you) {
+		if (you.getXCoord() - mho.getXCoord() > 0) {
+			mho.setXCoord(mho.getXCoord() + 1);
+		}
+		else {
+			mho.setXCoord(mho.getXCoord() - 1);
+		}
+	}
+			
+	public void moveDiagonal (Character mho, Character you) {
+		moveHorizontal(mho, you);
+		moveVertical(mho, you);
+	}
 	/**Created by Claire
 	 * Changes the coordinates of a character based on what key the user presses
 	 * @param mho Character object, either mho or you
@@ -456,7 +446,7 @@ public class HivoltsGameState extends JFrame{
 	  * Update game state to current values
 	  * @param keyPress UserKeyPress that implements keyListener
 	  */
-	 public void UpdateGameState(UserKeyPress keyPress){
+	 public void UpdateGameState(UserKeyPress keyPress, Graphics g){
 		
 		 
 		 if (keyPress.action == "jump" && keyPress.getJump() == false){
@@ -503,7 +493,7 @@ public class HivoltsGameState extends JFrame{
 		 
 		 if (displayedGameOver == true){
 			 if(keyPress.action == "yes"){
-				 System.out.println("Replay Game");
+				 resetGame(g);
 			 }
 			 else if (keyPress.action == "no"){
 				 dispose();
@@ -539,9 +529,11 @@ public class HivoltsGameState extends JFrame{
 		 return gameOver;
 	 }
 	 
-	 public void resetGame(){
+	 public void resetGame(Graphics g){
+		 g.clearRect(0, 0, screenW, screenH);
 		 gameOver = false;
 		 displayedGameOver = false;
-		 
+		 init();
+		 repaint();
 	 }
 }
