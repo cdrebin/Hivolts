@@ -98,7 +98,7 @@ public class HivoltsGameState extends JFrame{
 		screenW = getWidth();
 		screenH = getHeight();
 		UpdateGameState(keyPress, g);
-		
+		youMoved = false;
 
 		if (gameOver == false){
 			drawGame(g);
@@ -460,6 +460,10 @@ public class HivoltsGameState extends JFrame{
 	 * @param justJumped boolean displaying status of jump 
 	 */
 	 public void move(Character you, int moveX, int moveY){
+		 if (moveX == 0 && moveY == 0){
+			 return;
+		 }
+		 youMoved = true;
 		 if(keyPress.action == "jump" && keyPress.getJump() == false) {
 				int x = (int)(Math.random() * 9 + 1);
 				int y = (int)(Math.random() * 9 + 1 );
@@ -486,7 +490,6 @@ public class HivoltsGameState extends JFrame{
 			 you.setXCoord(you.getXCoord() + moveX);
 			 you.setYCoord(you.getYCoord() + moveY); 
 		 }
-		 youMoved = true;
 	 }
 	 
 	 
@@ -495,8 +498,6 @@ public class HivoltsGameState extends JFrame{
 	  * @param keyPress UserKeyPress that implements keyListener
 	  */
 	 public void UpdateGameState(UserKeyPress keyPress, Graphics g){
-		
-		 
 		 if (keyPress.action == "jump" && keyPress.getJump() == false){
 				
 			 	//if tile you are jumping to contains a fence
@@ -507,7 +508,6 @@ public class HivoltsGameState extends JFrame{
 						int xMove = keyPress.getMoveX();
 						int yMove = keyPress.getMoveY();
 						move(you, (xMove), (yMove));
-						moveMhos(mho, you);
 						keyPress.resetX();
 						keyPress.resetY();
 					}
@@ -518,25 +518,21 @@ public class HivoltsGameState extends JFrame{
 					int xMove = keyPress.getMoveX();
 					int yMove = keyPress.getMoveY();
 					move(you, (xMove), (yMove));
-					moveMhos(mho, you);
 					keyPress.resetX();
 					keyPress.resetY();
-				}
-				
-			
+				}		
 				keyPress.setJump(true);
-				
-
 			 }
 		 else{
 			 int xMove = keyPress.getMoveX();
 			 int yMove = keyPress.getMoveY();
 			 move(you, (xMove), (yMove));
-			moveMhos(mho, you);
 			 keyPress.resetX();
 			 keyPress.resetY();
 		 }
-		 
+		 if(youMoved){
+			 moveMhos(mho, you);
+		 }
 		 gameOver = testGameOver();
 		 
 		 
