@@ -301,6 +301,52 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 	 tiles[you.getXCoord()][you.getYCoord()].setYCoord(you.getYCoord());
 	 tiles[you.getXCoord()][you.getYCoord()].setType("you");
 }
+	
+	/**Created by Camille
+	 * Makes mhos move during game
+	 */
+	public void moveMhos (Character mho[], Character you) {
+		for (int i = 0; i < mho.length; i++) {
+			moveOneMho(mho[i], you);
+		}
+	}
+	
+	public void moveOneMho (Character mho, Character you) {
+		// if x and x are same, horizontal
+		// if y and y are some, vertical
+		if (you.getXCoord() == mho.getXCoord()) {
+			moveHorizontal(mho, you);
+		}
+		else if (you.getYCoord() == mho.getYCoord()) {
+			moveVertical(mho, you);
+		}
+		else { 
+			moveDiagonal(mho, you);
+		}
+	}
+	
+	public void moveHorizontal (Character mho, Character you) {
+			if (you.getXCoord() - mho.getXCoord() > 0) {
+				mho.setXCoord(mho.getXCoord() + 1);
+			}
+			else {
+				mho.setXCoord(mho.getXCoord() - 1);
+			}
+	}
+	
+	public void moveVertical (Character mho, Character you) {
+		if (you.getXCoord() - mho.getXCoord() > 0) {
+			mho.setXCoord(mho.getXCoord() + 1);
+		}
+		else {
+			mho.setXCoord(mho.getXCoord() - 1);
+		}
+	}
+			
+	public void moveDiagonal (Character mho, Character you) {
+		moveHorizontal(mho, you);
+		moveVertical(mho, you);
+	}
 
 	/**Created by Claire
 	 * Converts grid x-coordinates to screen coordinate equivalent
@@ -436,6 +482,7 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 						int xMove = keyPress.getMoveX();
 						int yMove = keyPress.getMoveY();
 						move(you, (xMove), (yMove));
+						moveMhos(mho, you);
 						keyPress.resetX();
 						keyPress.resetY();
 					}
@@ -447,6 +494,7 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 					int xMove = keyPress.getMoveX();
 					int yMove = keyPress.getMoveY();
 					move(you, (xMove), (yMove));
+					moveMhos(mho, you);
 					keyPress.resetX();
 					keyPress.resetY();
 				}
@@ -460,6 +508,7 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 			 int xMove = keyPress.getMoveX();
 			 int yMove = keyPress.getMoveY();
 			 move(you, (xMove), (yMove));
+			moveMhos(mho, you);
 			 keyPress.resetX();
 			 keyPress.resetY();
 		 }
@@ -509,5 +558,3 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 		
 	}
 }
-
-
