@@ -6,8 +6,11 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 
-//Claire Drebin and Camille Burbonnais
-//October 15, 2015 
+/**
+ * Displays and updates the game state of the Hivolts game 
+ * @author Claire Drebin and Camille Bourbonnais
+ *
+ */
 
 public class HivoltsGameState extends JFrame{
 	private final Color CYAN = new Color(0x91D8E2);
@@ -29,19 +32,27 @@ public class HivoltsGameState extends JFrame{
 	 //canvas origin coordinates
 	 int canvasOx = 0;
 	 int canvasOy = 22;
-
+	 
+	 //grid boundaries
+	 int leftBound = 0;
+	 int rightBound = 11;
+	 int upperBound = 0;
+	 int lowerBound = 11;
+	 
+	 //used to signify when game is over
 	 boolean gameOver = false;
+	 
 	 //set you character with random coordinates
 	 Character you = new Character();
-	 //Character mho1 = new Character(randomXCoord(), randomYCoord());
 	 
 	 //initalize character and fence arrays
 	 Character mho[] = new Character[12];
 	 Character fences[] = new Character[20];
 
+	 //initialize tiles
 	 Tile tiles[][] = new Tile[12][12];
 
-	 
+	 //initialize key listener
 	 UserKeyPress keyPress = new UserKeyPress();
 	 
 	//Hivolts constructor
@@ -75,29 +86,11 @@ public class HivoltsGameState extends JFrame{
 		UpdateGameState(keyPress);
 
 		if (gameOver == false){
-			g.setColor(Color.WHITE);
-			g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
-			drawGrid(g);
-			
-			// draw smileys
-			for (int i = 0; i < mho.length; i++) {
-				drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, CYAN, 0, 25);
-			}		
-			for (int i = 0; i < fences.length; i++) {
-				drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
-			}
-			drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
-			drawFences(g);
-			repaint();
-
+			drawGame(g);
 		}
 		
 		else{
-			g.setColor(Color.BLACK);
-			g.fillRect(0,0, screenW, screenH);
-			g.setColor(Color.WHITE);
-			g.drawString("GAME OVER :(", screenW / 2, screenH / 2);
-			
+			displayGameOver(g);
 		}
 		
 		try {
@@ -109,7 +102,42 @@ public class HivoltsGameState extends JFrame{
 	
 	}
 	
-	/**Created by Claire Drebin
+	/** Created by Camille
+	 * draws background, grid, mhos and fences
+	 * @param g Graphics object
+	 */
+	public void drawGame(Graphics g){
+		g.setColor(Color.WHITE);
+		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
+		
+		drawGrid(g);
+		
+		// draw smileys
+		for (int i = 0; i < mho.length; i++) {
+			drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, CYAN, 0, 25);
+		}		
+		for (int i = 0; i < fences.length; i++) {
+			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
+		}
+		drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
+		drawFences(g);
+		
+		repaint();
+	}
+	
+	/** Created by Claire
+	 * display Game Over, clear screen
+	 * @param g graphics object
+	 */
+	public void displayGameOver(Graphics g){
+		g.setColor(Color.BLACK);
+		g.fillRect(0,0, screenW, screenH);
+		g.setColor(Color.WHITE);
+		g.drawString("GAME OVER :(", screenW / 2, screenH / 2);
+	}
+	
+	
+	/**Created by Claire
 	 * Draw grid on screen
 	 * @param g Graphics object
 	 */
@@ -329,18 +357,19 @@ public class HivoltsGameState extends JFrame{
 		  * then updates coordinates based on key pressed by user
 		  */
 		 
-		 int leftBound = 1;
-		 int rightBound = 10;
-		 int upperBound = 1;
-		 int lowerBound = 10;
+		
 		 
-		 if(mho.getXCoord() >= rightBound && ((keyPress.action == "right") || (keyPress.action == "up and right") || (keyPress.action == "down and right"))) {
+		 if(mho.getXCoord() >= rightBound  && ((keyPress.action == "right") || (keyPress.action == "up and right") || (keyPress.action == "down and right"))) {
+			 gameOver = true;
 		 }
-		 else if (mho.getXCoord() <= leftBound && ((keyPress.action == "left") || (keyPress.action == "down and left") || (keyPress.action == "up and left"))) {
+		 else if (mho.getXCoord() <= leftBound  && ((keyPress.action == "left") || (keyPress.action == "down and left") || (keyPress.action == "up and left"))) {
+			 gameOver = true;
 		 }
-		 else if (mho.getYCoord() >= lowerBound && ((keyPress.action == "down") || (keyPress.action == "down and left") || (keyPress.action == "down and right"))) {
+		 else if (mho.getYCoord() >= lowerBound  && ((keyPress.action == "down") || (keyPress.action == "down and left") || (keyPress.action == "down and right"))) {
+			 gameOver = true;
 		 }
-		 else if (mho.getYCoord() <= upperBound && ((keyPress.action == "up") || (keyPress.action == "up and right") || (keyPress.action == "up and left"))) {
+		 else if (mho.getYCoord() <= upperBound  && ((keyPress.action == "up") || (keyPress.action == "up and right") || (keyPress.action == "up and left"))) {
+			 gameOver = true;
 		 }
 		 else {
 			 mho.setXCoord(mho.getXCoord() + moveX);
@@ -357,8 +386,10 @@ public class HivoltsGameState extends JFrame{
 		 
 		 if (keyPress.action == "jump" && keyPress.getJump() == false){
 				
+			 	//if tile you are jumping to contains a fence
 				if(tiles[you.getXCoord()][you.getYCoord()].getType().equals("fence")){
 					
+					//keep jumping until you no longer on a fence
 					while((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence")){
 						System.out.println("Sitting on a fence");
 
@@ -370,7 +401,7 @@ public class HivoltsGameState extends JFrame{
 					}
 					
 				}
-				
+				//if not on a fence, move you
 				else{
 					System.out.println("NOT sitting on a fence");
 					int xMove = keyPress.getMoveX();
@@ -380,7 +411,7 @@ public class HivoltsGameState extends JFrame{
 					keyPress.resetY();
 				}
 				
-				
+			
 				keyPress.setJump(true);
 				
 
@@ -402,11 +433,17 @@ public class HivoltsGameState extends JFrame{
 	  * @return value of gameOver (false = game is NOT over, true = game IS over)
 	  */
 	 public boolean testGameOver(){
-		 if(keyPress.getAction() != "jump" &&( (tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence") || 
+		 if(gameOver == true){
+		 
+		 }
+		 
+		 //not jumping, but hit a fence or a mho
+		 else if(keyPress.getAction() != "jump" &&( (tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence") || 
 				 ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho")))) {
 			gameOver = true;
 		 }
 		 
+		 //jumping on top of a mho
 		 else if (keyPress.getAction() == "jump" && ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho"))){
 			 gameOver = true;
 		 }

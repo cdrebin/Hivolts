@@ -1,5 +1,10 @@
 import javax.swing.JFrame;
 
+/**
+ * main class containing HivoltsGameState object
+ * @author Claire Drebin
+ *
+ */
 
 public class Main{
 	public static void main (String[] args){

@@ -1,7 +1,7 @@
 import java.awt.Color;
 
 /**
- * 
+ * Character class. Each character has a certain size, base color, and position
  * @author Camille Bourbonnais
  *
  */

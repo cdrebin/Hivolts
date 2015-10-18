@@ -1,5 +1,10 @@
 import java.awt.Color;
 
+/**
+ * Tile class. Tiles are assigned to each position on grid, can be filled or empty
+ * @author Camille Bourbonnais
+ *
+ */
 public class Tile {
 	private String type;
 	private int xCoord;

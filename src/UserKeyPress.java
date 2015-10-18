@@ -116,10 +116,10 @@ public class UserKeyPress implements KeyListener{
 			break;
 			
 		default: action = "nothing significant was pressed"	;
+			moveX = 0;
+			moveY = 0;
 		}
-		
-		System.out.println(action);
-		
+				
 	}
 
 	@Override
