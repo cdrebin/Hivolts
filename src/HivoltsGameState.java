@@ -490,7 +490,6 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 				}
 				//if not on a fence, move you
 				else{
-					System.out.println("NOT sitting on a fence");
 					int xMove = keyPress.getMoveX();
 					int yMove = keyPress.getMoveY();
 					move(you, (xMove), (yMove));
@@ -516,7 +515,13 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 		 gameOver = testGameOver();
 		 
 		 if (displayedGameOver == true){
-			 nextAction();
+			 if(keyPress.action == "yes"){
+				 System.out.println("Replay Game");
+			 }
+			 else if (keyPress.action == "no"){
+				 dispose();
+			 }
+			 //nextAction();
 		 }
 	 }
 	 
