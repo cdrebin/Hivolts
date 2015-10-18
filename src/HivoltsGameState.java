@@ -15,6 +15,13 @@ public class HivoltsGameState extends JFrame{
 
 	private final Color CYAN = new Color(0x91D8E2);
 
+	
+	//number of wins and losses
+	boolean win = false;
+	boolean lose = false;
+	int numWins = 0;
+	int numLosses = 0;
+	
 	//screen refers to the pop-up window 
 	 int screenW;
 	 int screenH;
@@ -83,7 +90,8 @@ public class HivoltsGameState extends JFrame{
 	 * @see java.awt.Window#paint(java.awt.Graphics)
 	 */
 	public void paint(Graphics g){
-		
+		screenW = getWidth();
+		screenH = getHeight();
 		UpdateGameState(keyPress, g);
 		
 
@@ -93,6 +101,7 @@ public class HivoltsGameState extends JFrame{
 		
 		else{
 			displayGameOver(g);	
+			numLosses++;
 			displayedGameOver = true;
 		}
 		
@@ -137,7 +146,13 @@ public class HivoltsGameState extends JFrame{
 		g.setColor(Color.BLACK);
 		g.fillRect(0,0, screenW, screenH);
 		g.setColor(Color.WHITE);
-		g.drawString("GAME OVER :(", 300, 300);
+		if (win == true){
+			g.drawString("You win! :)", 300, 300);
+		}
+		else if (lose == true){
+			g.drawString("You lose :(", 300, 300);
+		}
+		
 		g.drawString("Would you like to play again? (press y for yes, n for no) ", 250, 350 );
 			
 	}
@@ -426,15 +441,19 @@ public class HivoltsGameState extends JFrame{
 		 
 		 if(mho.getXCoord() >= rightBound  && ((keyPress.action == "right") || (keyPress.action == "up and right") || (keyPress.action == "down and right"))) {
 			 gameOver = true;
+			 lose = true;
 		 }
 		 else if (mho.getXCoord() <= leftBound  && ((keyPress.action == "left") || (keyPress.action == "down and left") || (keyPress.action == "up and left"))) {
 			 gameOver = true;
+			 lose = true;
 		 }
 		 else if (mho.getYCoord() >= lowerBound  && ((keyPress.action == "down") || (keyPress.action == "down and left") || (keyPress.action == "down and right"))) {
 			 gameOver = true;
+			 lose = true;
 		 }
 		 else if (mho.getYCoord() <= upperBound  && ((keyPress.action == "up") || (keyPress.action == "up and right") || (keyPress.action == "up and left"))) {
 			 gameOver = true;
+			 lose = true;
 		 }
 		 else {
 			 mho.setXCoord(mho.getXCoord() + moveX);
@@ -508,22 +527,25 @@ public class HivoltsGameState extends JFrame{
 	  */
 	 public boolean testGameOver(){
 		 if(gameOver == true){
-		 
+			 lose = true;
 		 }
 		 
 		 //not jumping, but hit a fence or a mho
 		 else if(keyPress.getAction() != "jump" &&( (tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence") || 
 				 ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho")))) {
 			gameOver = true;
+			lose = true;
 		 }
 		 
 		 //jumping on top of a mho
 		 else if (keyPress.getAction() == "jump" && ((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("mho"))){
 			 gameOver = true;
+			 lose = true;
 		 }
 			
 		 else{
-			gameOver = false; 
+			gameOver = false;
+			lose = true;
 		 }
 		 
 		 return gameOver;
@@ -531,6 +553,8 @@ public class HivoltsGameState extends JFrame{
 	 
 	 public void resetGame(Graphics g){
 		 g.clearRect(0, 0, screenW, screenH);
+		 win = false;
+		 lose = false;
 		 gameOver = false;
 		 displayedGameOver = false;
 		 init();
