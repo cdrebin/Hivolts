@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 
@@ -51,6 +52,7 @@ public class HivoltsGameState extends JFrame{
 	 boolean displayedKey = false;
 	 boolean incrementedWin = false;
 	 boolean incrementedLoss = false;
+	 boolean youMoved = false;
 	 
 	 //set you character with random coordinates
 	 Character you = new Character();
@@ -406,10 +408,10 @@ public class HivoltsGameState extends JFrame{
 		// if x and x are same, horizontal
 		// if y and y are some, vertical
 		if (you.getXCoord() == mho.getXCoord()) {
-			moveHorizontal(mho, you);
+			moveVertical(mho, you);
 		}
 		else if (you.getYCoord() == mho.getYCoord()) {
-			moveVertical(mho, you);
+			moveHorizontal(mho, you);
 		}
 		else { 
 			moveDiagonal(mho, you);
@@ -420,24 +422,29 @@ public class HivoltsGameState extends JFrame{
 			if (you.getXCoord() - mho.getXCoord() > 0) {
 				mho.setXCoord(mho.getXCoord() + 1);
 			}
-			else {
+			else if (you.getXCoord() == mho.getXCoord()) {
+				
+			} else {
 				mho.setXCoord(mho.getXCoord() - 1);
 			}
 	}
 	
 	public void moveVertical (Character mho, Character you) {
-		if (you.getXCoord() - mho.getXCoord() > 0) {
-			mho.setXCoord(mho.getXCoord() + 1);
+		if (you.getYCoord() - mho.getYCoord() > 0) {
+			mho.setYCoord(mho.getYCoord() + 1);
+		} else if (you.getYCoord() == mho.getYCoord()) {
+	
 		}
 		else {
-			mho.setXCoord(mho.getXCoord() - 1);
+			mho.setYCoord(mho.getYCoord() - 1);
 		}
 	}
 			
 	public void moveDiagonal (Character mho, Character you) {
-		moveHorizontal(mho, you);
-		moveVertical(mho, you);
+	//moveHorizontal(mho, you);
+		//moveVertical(mho, you);
 	}
+	
 	/**Created by Claire
 	 * Changes the coordinates of a character based on what key the user presses
 	 * @param mho Character object, either mho or you
@@ -445,41 +452,43 @@ public class HivoltsGameState extends JFrame{
 	 * @param moveY movement in y direction
 	 * @param justJumped boolean displaying status of jump 
 	 */
-	 public void move(Character mho, int moveX, int moveY){
+	/**Created by Claire
+	 * Changes the coordinates of a character based on what key the user presses
+	 * @param mho Character object, either mho or you
+	 * @param moveX movement in x direction
+	 * @param moveY movement in y direction
+	 * @param justJumped boolean displaying status of jump 
+	 */
+	 public void move(Character you, int moveX, int moveY){
 		 if(keyPress.action == "jump" && keyPress.getJump() == false) {
 				int x = (int)(Math.random() * 9 + 1);
 				int y = (int)(Math.random() * 9 + 1 );
-				 mho.setXCoord(x);
-				 mho.setYCoord(y);
+				 you.setXCoord(x);
+				 you.setYCoord(y);
 			 }
-		
-		 
 		 /*
 		  * Conditional statements testing to see if mho is on an edge or a corner, 
 		  * then updates coordinates based on key pressed by user
 		  */
-		 
-		 if(mho.getXCoord() >= rightBound  && ((keyPress.action == "right") || (keyPress.action == "up and right") || (keyPress.action == "down and right"))) {
+		 if(you.getXCoord() >= rightBound  && ((keyPress.action == "right") || (keyPress.action == "up and right") || (keyPress.action == "down and right"))) {
 			 gameOver = true;
-			 lose = true;
 		 }
-		 else if (mho.getXCoord() <= leftBound  && ((keyPress.action == "left") || (keyPress.action == "down and left") || (keyPress.action == "up and left"))) {
+		 else if (you.getXCoord() <= leftBound  && ((keyPress.action == "left") || (keyPress.action == "down and left") || (keyPress.action == "up and left"))) {
 			 gameOver = true;
-			 lose = true;
 		 }
-		 else if (mho.getYCoord() >= lowerBound  && ((keyPress.action == "down") || (keyPress.action == "down and left") || (keyPress.action == "down and right"))) {
+		 else if (you.getYCoord() >= lowerBound  && ((keyPress.action == "down") || (keyPress.action == "down and left") || (keyPress.action == "down and right"))) {
 			 gameOver = true;
-			 lose = true;
 		 }
-		 else if (mho.getYCoord() <= upperBound  && ((keyPress.action == "up") || (keyPress.action == "up and right") || (keyPress.action == "up and left"))) {
+		 else if (you.getYCoord() <= upperBound  && ((keyPress.action == "up") || (keyPress.action == "up and right") || (keyPress.action == "up and left"))) {
 			 gameOver = true;
-			 lose = true;
 		 }
 		 else {
-			 mho.setXCoord(mho.getXCoord() + moveX);
-			 mho.setYCoord(mho.getYCoord() + moveY); 
+			 you.setXCoord(you.getXCoord() + moveX);
+			 you.setYCoord(you.getYCoord() + moveY); 
 		 }
+		 youMoved = true;
 	 }
+	 
 	 
 	 /**Created by Claire
 	  * Update game state to current values
