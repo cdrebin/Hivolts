@@ -123,7 +123,7 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 	public void drawGame(Graphics g){
 		g.setColor(Color.WHITE);
 		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
-		
+		displayKey(g);
 		drawGrid(g);
 		
 		// draw smileys
@@ -153,6 +153,20 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 			
 	}
 	
+	public void displayKey(Graphics g){
+		g.setColor(Color.BLACK);
+		g.drawString("Key", 500, 50);
+		g.drawString("q: up and left", 500, 70);
+		g.drawString("w: up", 500, 90);
+		g.drawString("e: up and right", 500, 110);
+		g.drawString("a: left", 500, 130);
+		g.drawString("s: sit (stay on the same square for one turn)", 500, 150);
+		g.drawString("d: right", 500, 170);
+		g.drawString("z: down and left", 500, 190);
+		g.drawString("x: down", 500, 210);
+		g.drawString("c: down and left", 500, 230);
+		g.drawString("j: jump to random square", 500, 250);
+	}
 	
 	/**Created by Claire
 	 * Draw grid on screen
@@ -420,8 +434,6 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 		  * then updates coordinates based on key pressed by user
 		  */
 		 
-		
-		 
 		 if(mho.getXCoord() >= rightBound  && ((keyPress.action == "right") || (keyPress.action == "up and right") || (keyPress.action == "down and right"))) {
 			 gameOver = true;
 		 }
@@ -454,8 +466,6 @@ public class HivoltsGameState extends JFrame implements ActionListener{
 					
 					//keep jumping until you no longer on a fence
 					while((tiles[you.getXCoord()][you.getYCoord()].getType()).equals("fence")){
-						System.out.println("Sitting on a fence");
-
 						int xMove = keyPress.getMoveX();
 						int yMove = keyPress.getMoveY();
 						move(you, (xMove), (yMove));
