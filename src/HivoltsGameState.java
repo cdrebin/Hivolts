@@ -13,9 +13,10 @@ import javax.swing.JFrame;
 
 public class HivoltsGameState extends JFrame{
 	private static final long serialVersionUID = 1L;
-
+	private final Color BASE = new Color(0xf0eece);
+	private final Color FENCE = new Color(0xa78074);
 	private final Color CYAN = new Color(0x91D8E2);
-
+	private final Color CHARACTER = new Color(0xc97f73);
 	
 	//number of wins and losses
 	boolean win = false;
@@ -127,15 +128,16 @@ public class HivoltsGameState extends JFrame{
 		g.fillRect(canvasOx, canvasOy, canvasW, canvasH);
 		displayKey(g);
 		drawGrid(g);
-		
 		// draw smileys
 		for (int i = 0; i < mho.length; i++) {
-			drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, CYAN, 0, 25);
+			if (mho[i].getAlive()) {
+			drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, FENCE, 0, 25);
+			}
 		}		
 		for (int i = 0; i < fences.length; i++) {
 			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
 		}
-		drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), CYAN, Color.WHITE, 180, 22);
+		drawSmiley(g, Gridx2Screenx(you.getXCoord()), Gridy2Screeny(you.getYCoord()), FENCE, Color.WHITE, 180, 22);
 		drawFences(g);
 		
 		repaint();
@@ -199,7 +201,8 @@ public class HivoltsGameState extends JFrame{
 	 * @param g Graphics object
 	 */
 	public void drawGrid(Graphics g){
-		g.setColor(CYAN);
+		g.setColor(BASE);
+		g.fillRect(0, 22, Gridx2Screenx(12), Gridx2Screenx(12));
 		for(int i = 0; i < 13; i++){
 			//vertical
 			g.drawLine(Gridx2Screenx(i), 0, Gridx2Screenx(i), GridHeight2ScreenHeight(GRIDH));
@@ -258,8 +261,7 @@ public class HivoltsGameState extends JFrame{
 	 * @param y y-coordinate of fence
 	 */
 	public void drawOneFence(Graphics g, int x, int y) {
-		g.setColor(CYAN);
-		
+		g.setColor(FENCE);
 		//draws triangle on top of the fence
 		for (int i = 0; i < 3; i++) {
 			g.fillRect(x+5, y+5, 6, 35);
@@ -422,9 +424,7 @@ public class HivoltsGameState extends JFrame{
 			if (you.getXCoord() - mho.getXCoord() > 0) {
 				mho.setXCoord(mho.getXCoord() + 1);
 			}
-			else if (you.getXCoord() == mho.getXCoord()) {
-				
-			} else {
+			else if (you.getXCoord() == mho.getXCoord()) {} else {
 				mho.setXCoord(mho.getXCoord() - 1);
 			}
 	}
@@ -432,17 +432,22 @@ public class HivoltsGameState extends JFrame{
 	public void moveVertical (Character mho, Character you) {
 		if (you.getYCoord() - mho.getYCoord() > 0) {
 			mho.setYCoord(mho.getYCoord() + 1);
-		} else if (you.getYCoord() == mho.getYCoord()) {
-	
-		}
-		else {
+		} else if (you.getYCoord() == mho.getYCoord()) {} else {
 			mho.setYCoord(mho.getYCoord() - 1);
 		}
 	}
-			
-	public void moveDiagonal (Character mho, Character you) {
-	//moveHorizontal(mho, you);
-		//moveVertical(mho, you);
+	
+	public void moveDiagonal(Character mho, Character you) {
+		if ((you.getXCoord() - mho.getXCoord()) >= 
+		(you.getYCoord() - mho.getYCoord())) {
+			moveHorizontal(mho, you);
+		} if ((you.getXCoord() - mho.getXCoord()) <= 
+		(you.getYCoord() - mho.getYCoord())) {
+			moveVertical(mho, you);
+		}
+		if ((tiles[mho.getXCoord()][mho.getYCoord()].getType()).equals("fence")) {
+			mho.setAlive(false);
+		}
 	}
 	
 	/**Created by Claire
@@ -460,7 +465,7 @@ public class HivoltsGameState extends JFrame{
 	 * @param justJumped boolean displaying status of jump 
 	 */
 	 public void move(Character you, int moveX, int moveY){
-		 if (moveX == 0 && moveY == 0){
+		 if (moveX == 0 && moveY == 0 && keyPress.action != "jump"){
 			 return;
 		 }
 		 youMoved = true;
