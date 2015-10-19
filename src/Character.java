@@ -12,6 +12,7 @@ public class Character{
 	private int yCoord;
 	public int numWins;
 	public int numLosses;
+	public boolean alive;
 	
 	Character(){
 		size = 40;
@@ -19,6 +20,7 @@ public class Character{
 		yCoord = 0;
 		numWins = 0;
 		numLosses = 0;
+		alive = true;
 	}
 	
 	Character(int size, Color baseColor, int xCoord, int yCoord){
@@ -31,6 +33,7 @@ public class Character{
 	Character(int xCoord, int yCoord){
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		alive = true;
 	}
 	
 	public void addWin(){
@@ -71,4 +74,11 @@ public class Character{
 		this.yCoord = newYCoord;
 	}
 
+	public boolean getAlive(){
+		return this.alive;
+	}
+	
+	public void setAlive(boolean newAlive){
+		this.alive = newAlive;
+	}
 }
