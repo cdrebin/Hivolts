@@ -240,7 +240,8 @@ public class HivoltsGameState extends JFrame{
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 12; j++) {
 				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
-				tiles[i][j] = new Tile();
+				tiles[i][j].setXCoord(i);
+				tiles[i][j].setYCoord(j);
 				tiles[i][j].setType("fence");
 				x++;
 			}
@@ -250,7 +251,8 @@ public class HivoltsGameState extends JFrame{
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
-				tiles[i][j] = new Tile();
+				tiles[i][j].setXCoord(i);
+				tiles[i][j].setYCoord(j);
 				tiles[i][j].setType("fence");
 				y++;
 			}
