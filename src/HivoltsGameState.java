@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 public class HivoltsGameState extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private final Color BASE = new Color(0xf0eece);
-	private final Color FENCE = new Color(0xa78074);
+	private final Color FENCE = new Color(0xa3695f);
 	private final Color CYAN = new Color(0x91D8E2);
 	private final Color CHARACTER = new Color(0xc97f73);
 	
@@ -130,9 +130,9 @@ public class HivoltsGameState extends JFrame{
 		drawGrid(g);
 		// draw smileys
 		for (int i = 0; i < mho.length; i++) {
-			if (mho[i].getAlive()) {
+			if (mho[i].getAlive() == true) {
 			drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, FENCE, 0, 25);
-			}
+			} 
 		}		
 		for (int i = 0; i < fences.length; i++) {
 			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
@@ -240,6 +240,8 @@ public class HivoltsGameState extends JFrame{
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 12; j++) {
 				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
+				tiles[i][j] = new Tile();
+				tiles[i][j].setType("fence");
 				x++;
 			}
 			y = 11; x = 0;
@@ -248,6 +250,8 @@ public class HivoltsGameState extends JFrame{
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
+				tiles[i][j] = new Tile();
+				tiles[i][j].setType("fence");
 				y++;
 			}
 			y = 1; x = 11;
@@ -421,6 +425,10 @@ public class HivoltsGameState extends JFrame{
 			moveDiagonal(mho, you);
 			tiles[mho.getXCoord()][mho.getYCoord()].setType("mho");
 		}
+		if ((tiles[mho.getXCoord()][mho.getYCoord()].getType()).equals("fence")) {
+			mho.setAlive(false);
+			tiles[mho.getXCoord()][mho.getYCoord()].setType("empty");
+		}
 	}
 	
 	public void moveHorizontal (Character mho, Character you) {
@@ -450,9 +458,6 @@ public class HivoltsGameState extends JFrame{
 		} if ((you.getXCoord() - mho.getXCoord()) <= 
 		(you.getYCoord() - mho.getYCoord())) {
 			moveVertical(mho, you);
-		}
-		if ((tiles[mho.getXCoord()][mho.getYCoord()].getType()).equals("fence")) {
-			mho.setAlive(false);
 		}
 	}
 	
@@ -582,7 +587,6 @@ public class HivoltsGameState extends JFrame{
 			
 		 else{
 			gameOver = false;
-			lose = true;
 		 }
 		 
 		 return gameOver;
