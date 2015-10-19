@@ -411,16 +411,20 @@ public class HivoltsGameState extends JFrame{
 		// if y and y are some, vertical
 		if (you.getXCoord() == mho.getXCoord()) {
 			moveVertical(mho, you);
+			tiles[mho.getXCoord()][mho.getYCoord()].setType("mho");
 		}
 		else if (you.getYCoord() == mho.getYCoord()) {
 			moveHorizontal(mho, you);
+			tiles[mho.getXCoord()][mho.getYCoord()].setType("mho");
 		}
 		else { 
 			moveDiagonal(mho, you);
+			tiles[mho.getXCoord()][mho.getYCoord()].setType("mho");
 		}
 	}
 	
 	public void moveHorizontal (Character mho, Character you) {
+		tiles[mho.getXCoord()][mho.getYCoord()].setType("empty");
 			if (you.getXCoord() - mho.getXCoord() > 0) {
 				mho.setXCoord(mho.getXCoord() + 1);
 			}
@@ -430,6 +434,7 @@ public class HivoltsGameState extends JFrame{
 	}
 	
 	public void moveVertical (Character mho, Character you) {
+		tiles[mho.getXCoord()][mho.getYCoord()].setType("empty");
 		if (you.getYCoord() - mho.getYCoord() > 0) {
 			mho.setYCoord(mho.getYCoord() + 1);
 		} else if (you.getYCoord() == mho.getYCoord()) {} else {
@@ -438,6 +443,7 @@ public class HivoltsGameState extends JFrame{
 	}
 	
 	public void moveDiagonal(Character mho, Character you) {
+		tiles[mho.getXCoord()][mho.getYCoord()].setType("empty");
 		if ((you.getXCoord() - mho.getXCoord()) >= 
 		(you.getYCoord() - mho.getYCoord())) {
 			moveHorizontal(mho, you);
