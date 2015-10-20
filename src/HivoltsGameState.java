@@ -59,7 +59,8 @@ public class HivoltsGameState extends JFrame{
 	 Character you = new Character();
 	 
 	 //initalize character and fence arrays
-	 Character mho[] = new Character[12];
+	 //Character mho[] = new Character[12];
+	 ArrayList<Character> mho = new ArrayList<Character>();
 	 Character fences[] = new Character[20];
 
 	 //initialize tiles
@@ -129,10 +130,8 @@ public class HivoltsGameState extends JFrame{
 		displayKey(g);
 		drawGrid(g);
 		// draw smileys
-		for (int i = 0; i < mho.length; i++) {
-			if (mho[i].getAlive() == true) {
-			drawSmiley(g, Gridx2Screenx(mho[i].getXCoord()), Gridy2Screeny(mho[i].getYCoord()),Color.WHITE, FENCE, 0, 25);
-			} 
+		for (int i = 0; i < mho.size(); i++) {
+			drawSmiley(g, Gridx2Screenx((mho.get(i)).getXCoord()), Gridy2Screeny((mho.get(i)).getYCoord()),Color.WHITE, FENCE, 0, 25);
 		}		
 		for (int i = 0; i < fences.length; i++) {
 			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
@@ -300,7 +299,7 @@ public class HivoltsGameState extends JFrame{
 	 * @param you
 	 * @param tiles
 	 */
-	public void initializeGame(Character mhos[], Character fences[], Character you, Tile tiles[][]) {
+	public void initializeGame(ArrayList<Character> mhos, Character fences[], Character you, Tile tiles[][]) {
 	for (int i = 0; i < 12; i++) {
 		for (int j = 0; j < 12; j++) {
 			tiles[i][j] = new Tile();
@@ -314,10 +313,11 @@ public class HivoltsGameState extends JFrame{
 		array.remove(n);
 	}
 	for (int i = 0; i < 12; i++) {
-		 mhos[i] = new Character(newArray.get(i)[0], newArray.get(i)[1]);
-		 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setXCoord(mhos[i].getXCoord());
-		 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setYCoord(mhos[i].getYCoord());
-		 tiles[mhos[i].getXCoord()][mhos[i].getYCoord()].setType("mho");
+		 Character newMho = new Character(newArray.get(i)[0], newArray.get(i)[1]);
+		 mhos.add(newMho);
+		 tiles[(mhos.get(i)).getXCoord()][(mhos.get(i)).getYCoord()].setXCoord((mhos.get(i)).getXCoord());
+		 tiles[(mhos.get(i)).getXCoord()][(mhos.get(i)).getYCoord()].setYCoord((mhos.get(i)).getYCoord());
+		 tiles[(mhos.get(i)).getXCoord()][(mhos.get(i)).getYCoord()].setType("mho");
 	}			
 	for (int i = 0; i < 20; i++) {
 		fences[i] = new Character(newArray.get(i+12)[0], newArray.get(i+12)[1]);
@@ -410,13 +410,13 @@ public class HivoltsGameState extends JFrame{
 	/**Created by Camille
 	 * Makes mhos move during game
 	 */
-	public void moveMhos (Character mho[], Character you) {
-		for (int i = 0; i < mho.length; i++) {
-			moveOneMho(mho[i], you);
+	public void moveMhos (ArrayList<Character> mho, Character you) {
+		for (int i = 0; i < mho.size(); i++) {
+			moveOneMho(mho, mho.get(i), you);
 		}
 	}
 	
-	public void moveOneMho (Character mho, Character you) {
+	public void moveOneMho (ArrayList<Character> mhoList, Character mho, Character you) {
 		// if x and x are same, horizontal
 		// if y and y are some, vertical
 		if (you.getXCoord() == mho.getXCoord()) {
@@ -432,7 +432,7 @@ public class HivoltsGameState extends JFrame{
 			tiles[mho.getXCoord()][mho.getYCoord()].setType("mho");
 		}
 		if ((tiles[mho.getXCoord()][mho.getYCoord()].getType()).equals("fence")) {
-			mho.setAlive(false);
+			mhoList.remove(mho);
 			tiles[mho.getXCoord()][mho.getYCoord()].setType("empty");
 		}
 	}
