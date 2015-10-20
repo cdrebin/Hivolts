@@ -237,23 +237,27 @@ public class HivoltsGameState extends JFrame{
 	 */
 	public void drawFences(Graphics g) {
 		int x = 0; int y = 0;
+		// Creates top and bottom rows of fences
+		// Initializes tiles to contain "fence" value
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 12; j++) {
 				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
-				tiles[i][j].setXCoord(i);
-				tiles[i][j].setYCoord(j);
-				tiles[i][j].setType("fence");
+				tiles[j][y].setXCoord(j);
+				tiles[j][y].setYCoord(y);
+				tiles[j][y].setType("fence");
 				x++;
 			}
 			y = 11; x = 0;
 		}
+		// Creates left and right columns of fences
+		// Initializes tiles to contain "fence" value
 		y = 1;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				drawOneFence(g, Gridx2Screenx(x), Gridy2Screeny(y));
-				tiles[i][j].setXCoord(i);
-				tiles[i][j].setYCoord(j);
-				tiles[i][j].setType("fence");
+				tiles[x][j].setXCoord(x);
+				tiles[x][j].setYCoord(j);
+				tiles[x][j].setType("fence");
 				y++;
 			}
 			y = 1; x = 11;
