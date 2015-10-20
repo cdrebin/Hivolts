@@ -131,7 +131,7 @@ public class HivoltsGameState extends JFrame{
 		drawGrid(g);
 		// draw smileys
 		for (int i = 0; i < mho.size(); i++) {
-			drawSmiley(g, Gridx2Screenx((mho.get(i)).getXCoord()), Gridy2Screeny((mho.get(i)).getYCoord()),Color.WHITE, FENCE, 0, 25);
+			drawSmiley(g, Gridx2Screenx((mho.get(i)).getXCoord()), Gridy2Screeny((mho.get(i)).getYCoord()),Color.WHITE, FENCE, 0, 25);			
 		}		
 		for (int i = 0; i < fences.length; i++) {
 			drawOneFence(g, Gridx2Screenx(fences[i].getXCoord()), Gridy2Screeny(fences[i].getYCoord()));
