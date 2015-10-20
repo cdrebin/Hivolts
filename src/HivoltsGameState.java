@@ -557,8 +557,10 @@ public class HivoltsGameState extends JFrame{
 		 }
 		 gameOver = testGameOver();
 		 
-		 
 		 if (displayedGameOver == true){
+			 for (int i = 0; i < mho.size(); i++) {
+				 mho.remove(mho.get(i));
+			 }
 			 if(keyPress.action == "yes"){
 				 resetGame(g);
 			 }
